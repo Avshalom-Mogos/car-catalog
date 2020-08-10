@@ -8,10 +8,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { Car } from '../models/car';
+import { Car } from '../../models/car';
 
 
-const CatalogItem = ({ brand, modelDate, price, image }: Car) => {
+const CatalogItem = ({ id, brand, modelDate, price, image }: Car) => {
 
     const useStyles = makeStyles({
         root: {
@@ -30,11 +30,12 @@ const CatalogItem = ({ brand, modelDate, price, image }: Car) => {
                     <CardMedia
                         className={classes.media}
                         image={image}
-                        title="Contemplative Reptile"
+                    // title="Contemplative Reptile"
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
                             {brand}
+                            <p>{id}</p>
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
                             {modelDate}
