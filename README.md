@@ -2,5 +2,5 @@
 
 Run project
 
-client: npm start 
-server: npm run dev 
+- client: npm start 
+- server: npm run dev 
