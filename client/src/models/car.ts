@@ -9,4 +9,5 @@ export interface Car {
     modelDate: string;
     price: string;
     vehicleInteriorColor: string;
+    [key: string]: any; // make interface is indexable;
 };

@@ -1,30 +1,37 @@
-import React from 'react';
-import Pagination from '@material-ui/lab/Pagination';
-import { useStyles } from './useStyles';
-
+import React from "react";
+import Pagination from "@material-ui/lab/Pagination";
+import { Car } from "../../models/car";
+import { useStyles } from "./useStyles";
 
 type props = {
-    page: number;
-    setPage: React.Dispatch<React.SetStateAction<number>>;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  listToDisplay: Car[];
 };
 
-const PaginationBar = ({ page, setPage }: props) => {
+const PaginationBar = ({ page, setPage, listToDisplay }: props) => {
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
-    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        setPage(value);
-    };
-    const classes = useStyles();
+  const numOfPages: Function = (): number => {
+    return Math.floor(listToDisplay.length / 6);
+  };
 
-    return (
-        <div className={classes.pagination}>
-            <Pagination
-                shape="rounded"
-                size="large"
-                count={4}
-                page={page}
-                onChange={handleChange}
-            />
-        </div>
-    );
+  const classes = useStyles();
+
+  if (numOfPages()) return <></>; //fix this
+
+  return (
+    <div className={classes.pagination}>
+      <Pagination
+        shape="rounded"
+        size="large"
+        count={numOfPages()}
+        page={page}
+        onChange={handleChange}
+      />
+    </div>
+  );
 };
 export default PaginationBar;

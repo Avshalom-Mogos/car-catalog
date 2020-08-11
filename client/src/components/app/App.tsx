@@ -1,12 +1,12 @@
 import React from 'react';
 import Catalog from '../catalog/Catalog';
-import SearchAppBar from '../search-app-bar/SearchAppBar';
+import MyAppBar from '../my-app-bar/MyAppBar';
 import './App.css';
 
 const App = () => {
     return (
         <>
-            <SearchAppBar />
+            <MyAppBar />
             <Catalog />
         </>
     );
