@@ -1,0 +1,28 @@
+{
+  "name": "wix-challenge-1-car-catalog",
+  "version": "1.0.0",
+  "description": "Run project",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "client-install": "cd client && npm install",
+    "server-install": "cd server && npm install",
+    "client-build": "cd client && npm run build",
+    "server-build": "cd server && npm run build",
+    "start": "cd server && npm start",
+    "install-all": "npm run client-install && npm run server-install",
+    "build-all": "npm run client-build && npm run server-build",
+    "heroku-postbuild": "npm run install-all && npm run build-all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Avshalom-Mogos/wix-challenge-1-car-catalog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Avshalom-Mogos/wix-challenge-1-car-catalog/issues"
+  },
+  "homepage": "https://github.com/Avshalom-Mogos/wix-challenge-1-car-catalog#readme"
+}
