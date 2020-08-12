@@ -6,11 +6,13 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { Car } from "../../models/car";
 import { useStyles } from "./useStyles";
+import Spinner from "../spinner/Spinner";
 
 const Catalog = () => {
   const [carsList, setCarsList] = useState<Car[]>([]);
   const [listToDisplay, setListToDisplay] = useState<Car[]>([]);
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const classes = useStyles();
 
   useEffect(() => {
@@ -20,6 +22,9 @@ const Catalog = () => {
       .then((data) => {
         setCarsList([...data]);
         setListToDisplay([...data]);
+
+        //hide spinner after data load
+        setIsLoading(false);
       })
       .catch((error) => console.error("Error:", error));
   }, []);
@@ -39,6 +44,10 @@ const Catalog = () => {
         setListToDisplay={setListToDisplay}
         carsList={carsList}
       />
+      {isLoading && <Spinner />}
+      {!listToDisplay.length && !isLoading && (
+        <p>no results found. try different filters.</p>
+      )}
       <Grid container spacing={3} justify="space-evenly">
         {paginate(listToDisplay).map((car) => (
           <CatalogItem key={car.id} {...car} />
