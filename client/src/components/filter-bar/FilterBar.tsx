@@ -79,7 +79,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
     modelDate: {
       options: uniqeValues("modelDate").sort(),
       setStateFn: setSelectedModelDates,
-      label: "Select ModelDate",
+      label: "Select Model Date",
       placeholder: "ex: 2012",
     },
     model: {
