@@ -10,7 +10,6 @@ export const filterItems = (
   priceStart: any,
   priceEnd: number | number[] | undefined,
   carsList: Car[],
-  min: number,
   max: number
 ) => {
   //filter
@@ -18,6 +17,10 @@ export const filterItems = (
 
   for (let i = 0; i < carsList.length; i++) {
     const car: Car = carsList[i];
+
+
+    console.log("#".repeat(25));
+    
 
     let paramsToMatch: number = 0;
     let matchedParams: number = 0;
@@ -27,6 +30,9 @@ export const filterItems = (
       matchedParams = search(selectedBrands, car.brand)
         ? ++matchedParams
         : matchedParams;
+
+        console.error("brand",search(selectedBrands, car.brand));
+        
     }
 
     if (selectedColors.length) {
@@ -34,6 +40,8 @@ export const filterItems = (
       matchedParams = search(selectedColors, car.color)
         ? ++matchedParams
         : matchedParams;
+
+        console.error("color",search(selectedBrands, car.color));
     }
 
     if (selectedModels.length) {
@@ -41,6 +49,8 @@ export const filterItems = (
       matchedParams = search(selectedModels, car.model)
         ? ++matchedParams
         : matchedParams;
+
+        console.error("model",search(selectedBrands, car.model));
     }
 
     if (selectedModelDates.length) {
@@ -48,18 +58,21 @@ export const filterItems = (
       matchedParams = search(selectedModelDates, car.modelDate)
         ? ++matchedParams
         : matchedParams;
+
+        console.error("model",search(selectedBrands, car.modelDate));
     }
 
     //no params selected
-    console.log("min,max");
-    console.log(min, max);
+    console.log("max");
+    console.log(max);
 
     if (
       paramsToMatch === 0 &&
-      min === Number(priceStart) &&
+      0 === Number(priceStart) &&
       max === Number(priceEnd)
     ) {
       //set filterd list to all cars
+      console.error('RESET')
       setListToDisplay(carsList);
       return;
     }
@@ -69,10 +82,12 @@ export const filterItems = (
       Number(car.price) < Number(priceEnd);
     paramsToMatch++;
     if (inRange) matchedParams++;
+    else console.error("NOT IN PRICE RANGE");
+    
 
     if (paramsToMatch === matchedParams) filteredItems.push(car);
   }
-
+console.error(filteredItems);
   setListToDisplay([...filteredItems]);
 };
 

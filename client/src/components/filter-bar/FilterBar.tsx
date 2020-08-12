@@ -20,25 +20,21 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
   const [selectedModelDates, setSelectedModelDates] = useState<string[]>([]);
   const [priceStart, setPriceStart] = useState<any>(0);
   const [priceEnd, setPriceEnd] = useState<number | number[] | undefined>(0);
-  const [min, setMin] = useState<number>(0);
   const [max, setMax] = useState<number>(0);
   const classes = useStyles();
 
   useEffect(() => {
     //set minMaxPrice
-    if (!listToDisplay.length) return;
-    let min: number = Number(listToDisplay[0].price);
+    if (!listToDisplay.length || listToDisplay.length !== carsList.length)
+      return;
     let max: number = Number(listToDisplay[0].price);
     listToDisplay.forEach((c: Car) => {
       const price: number = Number(c.price);
-      if (price < min) min = price;
       if (price > max) max = price;
     });
-    setMin(min);
     setMax(max);
-    setPriceStart(min);
     setPriceEnd(max);
-  }, [listToDisplay]);
+  }, [listToDisplay, carsList]);
 
   const uniqeValues: Function = (key: string): string[] => {
     const result: string[] = [];
@@ -113,7 +109,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
           </Typography>
           <Slider
             value={priceStart}
-            min={min}
+            min={0}
             step={1}
             max={max}
             getAriaValueText={(val) => `$${val}`}
@@ -152,7 +148,6 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
               priceStart,
               priceEnd,
               carsList,
-              min,
               max
             )
           }
