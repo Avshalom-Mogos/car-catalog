@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -9,17 +8,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Car } from "../../models/car";
+import { useStyles } from "./useStyles";
 
 const CatalogItem = ({ brand, modelDate, model, price, image }: Car) => {
-  const useStyles = makeStyles({
-    root: {
-      maxWidth: 300,
-    },
-    media: {
-      height: 170,
-    },
-  });
-
   const classes = useStyles();
   return (
     <Grid item xs={12} sm={12} md={6} lg={4} xl={4} className={classes.root}>
@@ -30,7 +21,7 @@ const CatalogItem = ({ brand, modelDate, model, price, image }: Car) => {
             <Typography gutterBottom variant="h5" component="h2">
               {brand}
             </Typography>
-            <Typography variant="body2"  component="p">
+            <Typography variant="body2" component="p">
               {model}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">

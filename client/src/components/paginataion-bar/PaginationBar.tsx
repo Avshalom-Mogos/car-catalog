@@ -20,7 +20,7 @@ const PaginationBar = ({ page, setPage, listToDisplay }: props) => {
 
   const classes = useStyles();
 
-  if (numOfPages()) return <></>; //fix this
+  if (numOfPages() < 2) return <></>; //fix this
 
   return (
     <div className={classes.pagination}>

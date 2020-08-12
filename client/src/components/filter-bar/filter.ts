@@ -2,7 +2,6 @@ import { Car } from "../../models/car";
 
 export const filterItems = (
   listToDisplay: Car[],
-  resetList: Function,
   setListToDisplay: React.Dispatch<React.SetStateAction<Car[]>>,
   selectedBrands: string[],
   selectedColors: string[],
@@ -10,14 +9,15 @@ export const filterItems = (
   selectedModelDates: string[],
   priceStart: any,
   priceEnd: number | number[] | undefined,
+  carsList: Car[],
   min: number,
   max: number
 ) => {
   //filter
   const filteredItems: Car[] = [];
 
-  for (let i = 0; i < listToDisplay.length; i++) {
-    const car: Car = listToDisplay[i];
+  for (let i = 0; i < carsList.length; i++) {
+    const car: Car = carsList[i];
 
     let paramsToMatch: number = 0;
     let matchedParams: number = 0;
@@ -59,13 +59,10 @@ export const filterItems = (
       min === Number(priceStart) &&
       max === Number(priceEnd)
     ) {
-      console.error("RESET");
-      resetList();
+      //set filterd list to all cars
+      setListToDisplay(carsList);
       return;
     }
-
-    console.log(i);
-    
 
     const inRange: boolean =
       Number(car.price) > Number(priceStart) &&

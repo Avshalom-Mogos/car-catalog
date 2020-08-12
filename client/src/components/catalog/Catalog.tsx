@@ -2,18 +2,10 @@ import React, { useState, useEffect } from "react";
 import CatalogItem from "../catalog-item/CatalogItem";
 import FilterBar from "../filter-bar/FilterBar";
 import PaginationBar from "../paginataion-bar/PaginationBar";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { Car } from "../../models/car";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      paddingTop: theme.spacing(5),
-    },
-  })
-);
+import { useStyles } from "./useStyles";
 
 const Catalog = () => {
   const [carsList, setCarsList] = useState<Car[]>([]);
@@ -39,7 +31,6 @@ const Catalog = () => {
     const partialList: Car[] = listToDisplay.slice(startIndex, endIndex);
     return partialList;
   };
-
 
   return (
     <Container className={classes.root} maxWidth="md">

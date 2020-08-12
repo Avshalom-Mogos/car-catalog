@@ -3,19 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    title: {
-      flexGrow: 1,
-      display: "block",
-    },
-  })
-);
+import { useStyles } from "./useStyles";
 
 const MyAppBar = () => {
   const classes = useStyles();

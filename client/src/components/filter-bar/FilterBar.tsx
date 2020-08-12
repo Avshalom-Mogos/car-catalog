@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Checkbox from "@material-ui/core/Checkbox";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
+import FilterField from "../filter-field/FilterField";
 import { Car } from "../../models/car";
 import { useStyles } from "./useStyles";
 import { filterItems } from "./filter";
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 type props = {
   listToDisplay: Car[];
@@ -47,13 +40,6 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
     setPriceEnd(max);
   }, [listToDisplay]);
 
-  console.log("listToDisplay");
-  console.log(listToDisplay);
-
-  const resetList = (): void => {
-    setListToDisplay([...carsList]);
-  };
-
   const uniqeValues: Function = (key: string): string[] => {
     const result: string[] = [];
     carsList.forEach((c: Car) => {
@@ -73,133 +59,52 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
     return result;
   };
 
+  const filters: {
+    names: string[];
+    brand: object;
+    color: object;
+    modelDate: object;
+    model: object;
+    [key: string]: any;
+  } = {
+    names: ["brand", "model", "modelDate", "color"],
+    brand: {
+      options: uniqeValues("brand"),
+      setStateFn: setSelectedBrands,
+      label: "Select Brand",
+      placeholder: "ex: Ford",
+    },
+    color: {
+      options: uniqeValues("color"),
+      setStateFn: setSelectedColors,
+      label: "Select Color",
+      placeholder: "ex: black",
+    },
+    modelDate: {
+      options: uniqeValues("modelDate").sort(),
+      setStateFn: setSelectedModelDates,
+      label: "Select ModelDate",
+      placeholder: "ex: 2012",
+    },
+    model: {
+      options: getSelectedBrandModles(),
+      setStateFn: setSelectedModels,
+      label: "Select Model",
+      placeholder: "ex: Civic",
+    },
+  };
+
   return (
     <div className={classes.root}>
-      {/* brands */}
-      <Autocomplete
-        multiple
-        id="checkboxes-tags-demo"
-        options={uniqeValues("brand")}
-        disableCloseOnSelect
-        onChange={(event: any, selectedArr: string[]) => {
-          setSelectedBrands(selectedArr);
-        }}
-        getOptionLabel={(option: string) => option}
-        renderOption={(option, { selected }) => (
-          <React.Fragment>
-            <Checkbox
-              icon={icon}
-              checkedIcon={checkedIcon}
-              style={{ marginRight: 8 }}
-              checked={selected}
-            />
-            {option}
-          </React.Fragment>
-        )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            label="Select Brand"
-            placeholder="ex: Ford"
-          />
-        )}
-      />
-
-      {/* colors */}
-      <Autocomplete
-        multiple
-        id="checkboxes-tags-demo"
-        options={uniqeValues("color")}
-        disableCloseOnSelect
-        onChange={(event: any, selectedArr: string[]) => {
-          setSelectedColors(selectedArr);
-        }}
-        getOptionLabel={(option: string) => option}
-        renderOption={(option, { selected }) => (
-          <React.Fragment>
-            <Checkbox
-              icon={icon}
-              checkedIcon={checkedIcon}
-              style={{ marginRight: 8 }}
-              checked={selected}
-            />
-            {option}
-          </React.Fragment>
-        )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            label="Select Color"
-            placeholder="ex: Black"
-          />
-        )}
-      />
-
-      {/* modelDate */}
-      <Autocomplete
-        multiple
-        id="checkboxes-tags-demo"
-        options={uniqeValues("modelDate").sort()}
-        disableCloseOnSelect
-        onChange={(event: any, selectedArr: string[]) => {
-          setSelectedModelDates(selectedArr);
-        }}
-        getOptionLabel={(option: string) => option}
-        renderOption={(option, { selected }) => (
-          <React.Fragment>
-            <Checkbox
-              icon={icon}
-              checkedIcon={checkedIcon}
-              style={{ marginRight: 8 }}
-              checked={selected}
-            />
-            {option}
-          </React.Fragment>
-        )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            label="Select Model Date"
-            placeholder="ex: 2010"
-          />
-        )}
-      />
-
-      {/* model */}
-      <Autocomplete
-        multiple
-        id="checkboxes-tags-demo"
-        options={getSelectedBrandModles()}
-        disableCloseOnSelect
-        onChange={(event: any, selectedArr: string[]) => {
-          setSelectedModels(selectedArr);
-        }}
-        getOptionLabel={(option: string) => option}
-        renderOption={(option, { selected }) => (
-          <React.Fragment>
-            <Checkbox
-              icon={icon}
-              checkedIcon={checkedIcon}
-              style={{ marginRight: 8 }}
-              checked={selected}
-            />
-            {option}
-          </React.Fragment>
-        )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            label="Select Model"
-            placeholder="ex: Civic"
-          />
-        )}
-      />
-
-      {/* price */}
+      {filters.names.map((filterName: string, i: number) => (
+        <FilterField
+          key={i}
+          options={filters[filterName].options}
+          setStateFn={filters[filterName].setStateFn}
+          label={filters[filterName].label}
+          placeholder={filters[filterName].placeholder}
+        />
+      ))}
 
       <div className={classes.slider}>
         <div>
@@ -239,7 +144,6 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
           onClick={() =>
             filterItems(
               listToDisplay,
-              resetList,
               setListToDisplay,
               selectedBrands,
               selectedColors,
@@ -247,6 +151,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
               selectedModelDates,
               priceStart,
               priceEnd,
+              carsList,
               min,
               max
             )
