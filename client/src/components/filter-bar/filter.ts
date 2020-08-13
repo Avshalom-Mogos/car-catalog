@@ -1,4 +1,4 @@
-import { Car } from "../../models/car";
+import { Car } from '../../models/car';
 
 export const filterItems = (
   listToDisplay: Car[],
@@ -61,8 +61,8 @@ export const filterItems = (
     }
 
     const inRange: boolean =
-      Number(car.price) > Number(priceStart) &&
-      Number(car.price) < Number(priceEnd);
+      Number(car.price) >= Number(priceStart) &&
+      Number(car.price) <= Number(priceEnd);
     paramsToMatch++;
     if (inRange) matchedParams++;
 

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import CatalogItem from "../catalog-item/CatalogItem";
-import FilterBar from "../filter-bar/FilterBar";
-import PaginationBar from "../paginataion-bar/PaginationBar";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import { Car } from "../../models/car";
-import { useStyles } from "./useStyles";
-import Spinner from "../spinner/Spinner";
+import React, { useState, useEffect } from 'react';
+import CatalogItem from '../catalog-item/CatalogItem';
+import FilterBar from '../filter-bar/FilterBar';
+import PaginationBar from '../paginataion-bar/PaginationBar';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import { Car } from '../../models/car';
+import { useStyles } from './useStyles';
+import Spinner from '../spinner/Spinner';
 
 const Catalog = () => {
   const [carsList, setCarsList] = useState<Car[]>([]);
@@ -15,18 +15,22 @@ const Catalog = () => {
   const [isLoading, setIsLoading] = useState(true);
   const classes = useStyles();
 
+  console.log(carsList);
+  console.log(listToDisplay);
+  
+
   useEffect(() => {
     //get car list from the backend
-    fetch("/cars")
-      .then((res) => res.json())
-      .then((data) => {
+    fetch('/cars')
+      .then(res => res.json())
+      .then(data => {
         setCarsList([...data]);
         setListToDisplay([...data]);
 
         //hide spinner after data load
         setIsLoading(false);
       })
-      .catch((error) => console.error("Error:", error));
+      .catch(error => console.error('Error:', error));
   }, []);
 
   const paginate = (listToDisplay: Car[]): Car[] => {
@@ -38,7 +42,7 @@ const Catalog = () => {
   };
 
   return (
-    <Container className={classes.root} maxWidth="md">
+    <Container className={classes.root} maxWidth='md'>
       <FilterBar
         listToDisplay={listToDisplay}
         setListToDisplay={setListToDisplay}
@@ -48,8 +52,8 @@ const Catalog = () => {
       {!listToDisplay.length && !isLoading && (
         <p>no results found. try different filters.</p>
       )}
-      <Grid container spacing={3} justify="space-evenly">
-        {paginate(listToDisplay).map((car) => (
+      <Grid container spacing={3} justify='space-evenly'>
+        {paginate(listToDisplay).map(car => (
           <CatalogItem key={car.id} {...car} />
         ))}
       </Grid>
