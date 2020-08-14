@@ -33,9 +33,6 @@ const CatalogItem = ({ brand, modelDate, model, price, image }: Car) => {
           <Button size='small' color='primary'>
             ${price}
           </Button>
-          <Button size='small' color='primary'>
-            {/* Learn More */}
-          </Button>
         </CardActions>
       </Card>
     </Grid>
