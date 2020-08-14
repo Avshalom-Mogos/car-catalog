@@ -10,7 +10,7 @@ export const filterItems = (
   priceStart: any,
   priceEnd: number | number[] | undefined,
   carsList: Car[],
-  max: number
+  maxPrice: number
 ) => {
   //filter
   const filteredItems: Car[] = [];
@@ -53,7 +53,7 @@ export const filterItems = (
     if (
       paramsToMatch === 0 &&
       0 === Number(priceStart) &&
-      max === Number(priceEnd && listToDisplay.length !== carsList.length)
+      maxPrice === Number(priceEnd && listToDisplay.length !== carsList.length)
     ) {
       //set filterd list to all cars
       setListToDisplay(carsList);

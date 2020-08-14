@@ -20,21 +20,17 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
   const [selectedModelDates, setSelectedModelDates] = useState<string[]>([]);
   const [priceStart, setPriceStart] = useState<any>(0);
   const [priceEnd, setPriceEnd] = useState<number | number[] | undefined>(0);
-  const [max, setMax] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(0);
   const classes = useStyles();
 
   useEffect(() => {
-    //get & set Max Price
-    if (!listToDisplay.length || listToDisplay.length !== carsList.length)
-      return;
-    let max: number = Number(listToDisplay[0].price);
-    listToDisplay.forEach((c: Car) => {
-      const price: number = Number(c.price);
-      if (price > max) max = price;
-    });
-    setMax(max);
+    //get & set Max Pric
+    if (!carsList.length) return;
+    const allPricesArr: number[] = carsList.map(car => Number(car.price));
+    const max: number = Math.max(...allPricesArr);
+    setMaxPrice(max);
     setPriceEnd(max);
-  }, [listToDisplay, carsList]);
+  }, [carsList]);
 
   const getUniqeValues: Function = (key: string): string[] => {
     const result: string[] = [];
@@ -111,7 +107,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
             value={priceStart}
             min={0}
             step={1}
-            max={max}
+            max={maxPrice}
             getAriaValueText={val => `$${val}`}
             valueLabelFormat={val => `$${val}`}
             onChange={(e, newValue) => {
@@ -124,7 +120,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
             value={priceEnd}
             min={priceStart + 1}
             step={1}
-            max={max}
+            max={maxPrice}
             getAriaValueText={val => `$${val}`}
             valueLabelFormat={val => `$${val}`}
             onChange={(e, newValue) => {
@@ -148,7 +144,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
               priceStart,
               priceEnd,
               carsList,
-              max
+              maxPrice
             )
           }
         >
