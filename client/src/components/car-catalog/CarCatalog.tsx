@@ -20,6 +20,8 @@ const CarCatalog = () => {
     getCarsList(setCarsList, setListToDisplay, setIsLoading);
   }, []);
 
+  const loaderIfNeeded: boolean | JSX.Element = isLoading && <Spinner />;
+
   const paginate = (listToDisplay: Car[]): Car[] => {
     const carsPerPage: number = 6;
     const endIndex: number = page * carsPerPage;
@@ -35,7 +37,7 @@ const CarCatalog = () => {
         setListToDisplay={setListToDisplay}
         carsList={carsList}
       />
-      {isLoading && <Spinner />}
+      {loaderIfNeeded}
       {!listToDisplay.length && !isLoading && (
         <p>no results found. try different filters.</p>
       )}
