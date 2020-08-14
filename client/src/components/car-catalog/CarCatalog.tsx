@@ -21,6 +21,8 @@ const CarCatalog = () => {
   }, []);
 
   const loaderIfNeeded: boolean | JSX.Element = isLoading && <Spinner />;
+  const noResults: boolean | JSX.Element = !listToDisplay.length &&
+    !isLoading && <p>no results found. try different filters.</p>;
 
   const paginate = (listToDisplay: Car[]): Car[] => {
     const carsPerPage: number = 6;
@@ -38,9 +40,7 @@ const CarCatalog = () => {
         carsList={carsList}
       />
       {loaderIfNeeded}
-      {!listToDisplay.length && !isLoading && (
-        <p>no results found. try different filters.</p>
-      )}
+      {noResults}
       <Grid container spacing={3} justify='space-evenly'>
         {paginate(listToDisplay).map(car => (
           <CarCatalogItem key={car.id} {...car} />
