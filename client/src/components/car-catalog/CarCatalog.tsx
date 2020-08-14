@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CatalogItem from '../catalog-item/CatalogItem';
+import CarCatalogItem from './car-catalog-item/CarCatalogItem';
 import FilterBar from '../filter-bar/FilterBar';
 import PaginationBar from '../paginataion-bar/PaginationBar';
 import Container from '@material-ui/core/Container';
@@ -8,7 +8,7 @@ import { Car } from '../../models/car';
 import { useStyles } from './useStyles';
 import Spinner from '../spinner/Spinner';
 
-const Catalog = () => {
+const CarCatalog = () => {
   const [carsList, setCarsList] = useState<Car[]>([]);
   const [listToDisplay, setListToDisplay] = useState<Car[]>([]);
   const [page, setPage] = useState(1);
@@ -17,7 +17,6 @@ const Catalog = () => {
 
   console.log(carsList);
   console.log(listToDisplay);
-  
 
   useEffect(() => {
     //get car list from the backend
@@ -54,7 +53,7 @@ const Catalog = () => {
       )}
       <Grid container spacing={3} justify='space-evenly'>
         {paginate(listToDisplay).map(car => (
-          <CatalogItem key={car.id} {...car} />
+          <CarCatalogItem key={car.id} {...car} />
         ))}
       </Grid>
       <PaginationBar
@@ -65,4 +64,4 @@ const Catalog = () => {
     </Container>
   );
 };
-export default Catalog;
+export default CarCatalog;

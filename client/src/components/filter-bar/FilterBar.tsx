@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import Typography from "@material-ui/core/Typography";
-import Slider from "@material-ui/core/Slider";
-import Button from "@material-ui/core/Button";
-import FilterField from "../filter-field/FilterField";
-import { Car } from "../../models/car";
-import { useStyles } from "./useStyles";
-import { filterItems } from "./filter";
+import React, { useState, useEffect } from 'react';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
+import Button from '@material-ui/core/Button';
+import FilterField from '../filter-field/FilterField';
+import { Car } from '../../models/car';
+import { useStyles } from './useStyles';
+import { filterItems } from './filter';
 
 type props = {
   listToDisplay: Car[];
@@ -24,7 +24,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
   const classes = useStyles();
 
   useEffect(() => {
-    //set minMaxPrice
+    //get & set Max Price
     if (!listToDisplay.length || listToDisplay.length !== carsList.length)
       return;
     let max: number = Number(listToDisplay[0].price);
@@ -36,7 +36,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
     setPriceEnd(max);
   }, [listToDisplay, carsList]);
 
-  const uniqeValues: Function = (key: string): string[] => {
+  const getUniqeValues: Function = (key: string): string[] => {
     const result: string[] = [];
     carsList.forEach((c: Car) => {
       if (!result.includes(c[key])) result.push(c[key]);
@@ -45,7 +45,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
   };
 
   const getSelectedBrandModles: Function = (): string[] => {
-    if (!selectedBrands.length) return uniqeValues("model");
+    if (!selectedBrands.length) return getUniqeValues('model');
     const result: string[] = [];
     listToDisplay.forEach((c: Car) => {
       if (selectedBrands.includes(c.brand) && !result.includes(c.model)) {
@@ -63,30 +63,30 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
     model: object;
     [key: string]: any;
   } = {
-    names: ["brand", "model", "modelDate", "color"],
+    names: ['brand', 'model', 'modelDate', 'color'],
     brand: {
-      options: uniqeValues("brand"),
+      options: getUniqeValues('brand'),
       setStateFn: setSelectedBrands,
-      label: "Select Brand",
-      placeholder: "ex: Ford",
+      label: 'Select Brand',
+      placeholder: 'ex: Ford',
     },
     color: {
-      options: uniqeValues("color"),
+      options: getUniqeValues('color'),
       setStateFn: setSelectedColors,
-      label: "Select Color",
-      placeholder: "ex: black",
+      label: 'Select Color',
+      placeholder: 'ex: black',
     },
     modelDate: {
-      options: uniqeValues("modelDate").sort(),
+      options: getUniqeValues('modelDate').sort(),
       setStateFn: setSelectedModelDates,
-      label: "Select Model Date",
-      placeholder: "ex: 2012",
+      label: 'Select Model Date',
+      placeholder: 'ex: 2012',
     },
     model: {
       options: getSelectedBrandModles(),
       setStateFn: setSelectedModels,
-      label: "Select Model",
-      placeholder: "ex: Civic",
+      label: 'Select Model',
+      placeholder: 'ex: Civic',
     },
   };
 
@@ -104,7 +104,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
 
       <div className={classes.slider}>
         <div>
-          <Typography id="non-linear-slider" gutterBottom>
+          <Typography id='non-linear-slider' gutterBottom>
             Price range
           </Typography>
           <Slider
@@ -112,31 +112,31 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
             min={0}
             step={1}
             max={max}
-            getAriaValueText={(val) => `$${val}`}
-            valueLabelFormat={(val) => `$${val}`}
+            getAriaValueText={val => `$${val}`}
+            valueLabelFormat={val => `$${val}`}
             onChange={(e, newValue) => {
               setPriceStart(newValue);
             }}
-            valueLabelDisplay="auto"
-            aria-labelledby="non-linear-slider"
+            valueLabelDisplay='auto'
+            aria-labelledby='non-linear-slider'
           />
           <Slider
             value={priceEnd}
             min={priceStart + 1}
             step={1}
             max={max}
-            getAriaValueText={(val) => `$${val}`}
-            valueLabelFormat={(val) => `$${val}`}
+            getAriaValueText={val => `$${val}`}
+            valueLabelFormat={val => `$${val}`}
             onChange={(e, newValue) => {
               setPriceEnd(newValue);
             }}
-            valueLabelDisplay="auto"
-            aria-labelledby="non-linear-slider"
+            valueLabelDisplay='auto'
+            aria-labelledby='non-linear-slider'
           />
         </div>
         <Button
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
           onClick={() =>
             filterItems(
               listToDisplay,

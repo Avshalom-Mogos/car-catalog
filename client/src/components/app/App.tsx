@@ -1,5 +1,5 @@
 import React from 'react';
-import Catalog from '../catalog/Catalog';
+import Catalog from '../car-catalog/CarCatalog';
 import MyAppBar from '../my-app-bar/MyAppBar';
 
 const App = () => {
