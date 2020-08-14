@@ -4,6 +4,7 @@ import FilterBar from '../filter-bar/FilterBar';
 import PaginationBar from '../paginataion-bar/PaginationBar';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import { getCarsList } from '../../api/apiCalls';
 import { Car } from '../../models/car';
 import { useStyles } from './useStyles';
 import Spinner from '../spinner/Spinner';
@@ -15,21 +16,8 @@ const CarCatalog = () => {
   const [isLoading, setIsLoading] = useState(true);
   const classes = useStyles();
 
-  console.log(carsList);
-  console.log(listToDisplay);
-
   useEffect(() => {
-    //get car list from the backend
-    fetch('/cars')
-      .then(res => res.json())
-      .then(data => {
-        setCarsList([...data]);
-        setListToDisplay([...data]);
-
-        //hide spinner after data load
-        setIsLoading(false);
-      })
-      .catch(error => console.error('Error:', error));
+    getCarsList(setCarsList, setListToDisplay, setIsLoading);
   }, []);
 
   const paginate = (listToDisplay: Car[]): Car[] => {
