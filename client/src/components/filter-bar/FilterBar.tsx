@@ -33,20 +33,18 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
   }, [carsList]);
 
   const getUniqeValues: Function = (key: string): string[] => {
-    const result: string[] = [];
-    carsList.forEach((c: Car) => {
-      if (!result.includes(c[key])) result.push(c[key]);
-    });
-    return result;
+    const allValues: string[] = carsList.map(c => c[key]);
+    const uniqeValues: string[] = Array.from(new Set(allValues));
+    return uniqeValues;
   };
 
   const getSelectedBrandModles: Function = (): string[] => {
     if (!selectedBrands.length) return getUniqeValues('model');
     const result: string[] = [];
     listToDisplay.forEach((c: Car) => {
-      if (selectedBrands.includes(c.brand) && !result.includes(c.model)) {
-        result.push(c.model);
-      }
+      const brandInSelected: boolean = selectedBrands.includes(c.brand);
+      const modelNotInResult: boolean = !result.includes(c.model);
+      if (brandInSelected && modelNotInResult) result.push(c.model);
     });
     return result;
   };
