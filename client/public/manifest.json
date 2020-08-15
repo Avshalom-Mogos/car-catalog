@@ -5,7 +5,7 @@
     {
       "src": "car.png",
       "type": "image/png",
-      "sizes": "24x24"
+      "sizes": "256x256"
     }
   ],
   "start_url": ".",
