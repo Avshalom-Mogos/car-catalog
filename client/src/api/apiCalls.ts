@@ -6,14 +6,14 @@ export const getCarsList = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ): void => {
   fetch('/cars')
-    .then(res => res.json())
-    .then(data => {
+    .then(res => {
+      if (!res.ok) throw new Error(res.statusText);
+      return res.json();
+    })
+    .then((data: Car[]) => {
       setCarsList([...data]);
       setListToDisplay([...data]);
-      setIsLoading(false);
     })
-    .catch(error => {
-      setIsLoading(false);
-      console.error('Error:', error);
-    });
+    .catch(err => console.error('Error:', err))
+    .finally(() => setIsLoading(false));
 };

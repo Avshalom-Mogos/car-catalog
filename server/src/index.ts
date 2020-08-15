@@ -6,7 +6,7 @@ const app: Application = express();
 const port: string | number = process.env.PORT || 5000;
 
 app.get('/cars', (req: Request, res: Response) => {
-  res.send(cars);
+  res.status(200).send(cars);
 });
 
 //deployment
