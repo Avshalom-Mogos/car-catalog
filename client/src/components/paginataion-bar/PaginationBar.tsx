@@ -10,27 +10,30 @@ type props = {
 };
 
 const PaginationBar = ({ page, setPage, listToDisplay }: props) => {
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const classes = useStyles();
+
+  const setPageOnChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
     setPage(value);
   };
 
-  const numOfPages: Function = (): number => {
+  const calcNumOfPages: Function = (): number => {
     const carsPerPage: number = 6;
     return Math.ceil(listToDisplay.length / carsPerPage);
   };
 
-  const classes = useStyles();
-
-  if (numOfPages() < 2) return <></>;
+  if (calcNumOfPages() < 2) return <></>;
 
   return (
     <div className={classes.pagination}>
       <Pagination
         shape='rounded'
         size='large'
-        count={numOfPages()}
+        count={calcNumOfPages()}
         page={page}
-        onChange={handleChange}
+        onChange={setPageOnChange}
       />
     </div>
   );
