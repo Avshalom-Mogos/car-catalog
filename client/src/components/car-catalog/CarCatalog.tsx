@@ -4,7 +4,7 @@ import FilterBar from '../filter-bar/FilterBar';
 import PaginationBar from '../paginataion-bar/PaginationBar';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import { getCarsList } from '../../api/apiCalls';
+import { getCarsList } from '../../api/cars';
 import { Car } from '../../models/car';
 import { useStyles } from './useStyles';
 import Spinner from '../spinner/Spinner';
@@ -17,7 +17,18 @@ const CarCatalog = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    getCarsList(setCarsList, setListToDisplay, setIsLoading);
+    const loadContent = async () => {
+      try {
+        const fetchedCarslist = await getCarsList();
+        setCarsList(fetchedCarslist);
+        setListToDisplay(fetchedCarslist);
+      } catch (err) {
+        console.error('Error:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadContent();
   }, []);
 
   const loaderIfNeeded: boolean | JSX.Element = isLoading && <Spinner />;
