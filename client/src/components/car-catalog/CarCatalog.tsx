@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import CarCatalogItem from './car-catalog-item/CarCatalogItem';
 import FilterBar from '../filter-bar/FilterBar';
 import PaginationBar from '../paginataion-bar/PaginationBar';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { getCarsList } from '../../api/cars';
 import { Car } from '../../models/car';
-import { useStyles } from './useStyles';
 import Spinner from '../spinner/Spinner';
 
 const CarCatalog = () => {
@@ -14,7 +12,6 @@ const CarCatalog = () => {
   const [listToDisplay, setListToDisplay] = useState<Car[]>([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const classes = useStyles();
 
   useEffect(() => {
     const loadContent = async () => {
@@ -44,7 +41,7 @@ const CarCatalog = () => {
   };
 
   return (
-    <Container className={classes.root} maxWidth='md'>
+    <>
       <FilterBar
         listToDisplay={listToDisplay}
         setListToDisplay={setListToDisplay}
@@ -62,7 +59,7 @@ const CarCatalog = () => {
         setPage={setPage}
         listToDisplay={listToDisplay}
       />
-    </Container>
+    </>
   );
 };
 export default CarCatalog;
