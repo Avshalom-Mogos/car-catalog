@@ -18,18 +18,18 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
   const [selectedModelDates, setSelectedModelDates] = useState<string[]>([]);
-  const [priceStart, setPriceStart] = useState<any>(0);
-  const [priceEnd, setPriceEnd] = useState<number | number[] | undefined>(0);
+  const [priceRange, setPriceRange] = useState<number[]>([0, 0]);
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const classes = useStyles();
 
   useEffect(() => {
-    //get & set Max Pric
+    //get & set Max Price
     if (!carsList.length) return;
     const allPricesArr: number[] = carsList.map(car => Number(car.price));
     const max: number = Math.max(...allPricesArr);
     setMaxPrice(max);
-    setPriceEnd(max);
+    setPriceRange([0, max]);
+    console.log(max);
   }, [carsList]);
 
   const getUniqeValues: Function = (key: string): string[] => {
@@ -97,58 +97,40 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
       ))}
 
       <div className={classes.slider}>
-        <div>
-          <Typography id='non-linear-slider' gutterBottom>
-            Price range
-          </Typography>
-          <Slider
-            value={priceStart}
-            min={0}
-            step={1}
-            max={maxPrice}
-            getAriaValueText={val => `$${val}`}
-            valueLabelFormat={val => `$${val}`}
-            onChange={(e, newValue) => {
-              setPriceStart(newValue);
-            }}
-            valueLabelDisplay='auto'
-            aria-labelledby='non-linear-slider'
-          />
-          <Slider
-            value={priceEnd}
-            min={priceStart + 1}
-            step={1}
-            max={maxPrice}
-            getAriaValueText={val => `$${val}`}
-            valueLabelFormat={val => `$${val}`}
-            onChange={(e, newValue) => {
-              setPriceEnd(newValue);
-            }}
-            valueLabelDisplay='auto'
-            aria-labelledby='non-linear-slider'
-          />
-        </div>
-        <Button
-          variant='contained'
-          color='secondary'
-          onClick={() =>
-            filterItems(
-              listToDisplay,
-              setListToDisplay,
-              selectedBrands,
-              selectedColors,
-              selectedModels,
-              selectedModelDates,
-              priceStart,
-              priceEnd,
-              carsList,
-              maxPrice
-            )
-          }
-        >
-          SUBMIT
-        </Button>
+        <Slider
+          value={priceRange}
+          onChange={(e, newValue) => setPriceRange(newValue as number[])}
+          min={0}
+          max={maxPrice}
+          valueLabelDisplay='on'
+          aria-labelledby='range-slider'
+          getAriaValueText={val => `$${val}`}
+          valueLabelFormat={val => `$${val}`}
+        />
+        <Typography id='range-slider' gutterBottom>
+          Price range
+        </Typography>
       </div>
+      <Button
+        variant='contained'
+        color='secondary'
+        className={classes.button}
+        onClick={() =>
+          filterItems(
+            listToDisplay,
+            setListToDisplay,
+            selectedBrands,
+            selectedColors,
+            selectedModels,
+            selectedModelDates,
+            priceRange,
+            carsList,
+            maxPrice
+          )
+        }
+      >
+        SUBMIT
+      </Button>
     </div>
   );
 };

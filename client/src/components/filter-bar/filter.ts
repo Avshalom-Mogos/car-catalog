@@ -7,8 +7,7 @@ export const filterItems = (
   selectedColors: string[],
   selectedModels: string[],
   selectedModelDates: string[],
-  priceStart: any,
-  priceEnd: number | number[] | undefined,
+  priceRange: number[],
   carsList: Car[],
   maxPrice: number
 ) => {
@@ -49,22 +48,27 @@ export const filterItems = (
         : matchedParams;
     }
 
+    const [selectedMinPrice, selectedMaxPrice] = priceRange;
+
+    console.log(selectedMinPrice, selectedMaxPrice);
+    
     //no params selected
     if (
       paramsToMatch === 0 &&
-      0 === Number(priceStart) &&
-      maxPrice === Number(priceEnd && listToDisplay.length !== carsList.length)
+      0 === selectedMinPrice &&
+      maxPrice === selectedMaxPrice &&
+      listToDisplay.length !== carsList.length
     ) {
       //set filterd list to all cars
       setListToDisplay(carsList);
       return;
     }
 
-    const inRange: boolean =
-      Number(car.price) >= Number(priceStart) &&
-      Number(car.price) <= Number(priceEnd);
+    const inPriceRange: boolean =
+      Number(car.price) >= Number(selectedMinPrice) &&
+      Number(car.price) <= Number(selectedMaxPrice);
     paramsToMatch++;
-    if (inRange) matchedParams++;
+    if (inPriceRange) matchedParams++;
 
     if (paramsToMatch === matchedParams) filteredItems.push(car);
   }
