@@ -29,7 +29,6 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
     const max: number = Math.max(...allPricesArr);
     setMaxPrice(max);
     setPriceRange([0, max]);
-    console.log(max);
   }, [carsList]);
 
   const getUniqeValues: Function = (key: string): string[] => {
