@@ -1,13 +1,13 @@
 import express, { Application, Request, Response } from 'express';
+import { carsRouter } from './routes/cars';
 import path from 'path';
-import cars from './data/cars.json';
 
 const app: Application = express();
 const port: string | number = process.env.PORT || 5000;
 
-app.get('/cars', (req: Request, res: Response) => {
-  res.status(200).send(cars);
-});
+
+//routes
+app.use('/cars', carsRouter);
 
 //deployment
 if (process.env.NODE_ENV === 'production') {
