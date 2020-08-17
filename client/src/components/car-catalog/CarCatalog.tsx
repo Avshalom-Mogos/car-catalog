@@ -20,7 +20,7 @@ const CarCatalog = () => {
         setCarsList(fetchedCarslist);
         setListToDisplay(fetchedCarslist);
       } catch (err) {
-        console.error('Error:', err);
+        console.error('Error from cars catalog catch');
       } finally {
         setIsLoading(false);
       }
