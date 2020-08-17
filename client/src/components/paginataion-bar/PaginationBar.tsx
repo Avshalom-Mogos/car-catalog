@@ -24,7 +24,8 @@ const PaginationBar = ({ page, setPage, listToDisplay }: props) => {
     return Math.ceil(listToDisplay.length / carsPerPage);
   };
 
-  if (calcNumOfPages() < 2) return <></>;
+  const minPages: number = 2;
+  if (calcNumOfPages() < minPages) return <></>;
 
   return (
     <div className={classes.pagination}>

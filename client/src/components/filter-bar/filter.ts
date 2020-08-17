@@ -49,9 +49,6 @@ export const filterItems = (
     }
 
     const [selectedMinPrice, selectedMaxPrice] = priceRange;
-
-    console.log(selectedMinPrice, selectedMaxPrice);
-    
     //no params selected
     if (
       paramsToMatch === 0 &&
