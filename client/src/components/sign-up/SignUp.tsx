@@ -1,0 +1,177 @@
+import React, { useContext, useState } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import { useFormik } from 'formik';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import FacebookAuth from '../facebook-auth/FacebookAuth';
+import { useStyles } from './useStyles';
+import { authenticate } from '../../api/auth';
+import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { useHistory } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+
+const SignUp = () => {
+  const classes = useStyles();
+  const history = useHistory();
+  const [error, setError] = useState({ show: false, msg: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
+
+  type User = {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  };
+
+  const submitForm = async ({
+    name,
+    email,
+    password,
+    confirmPassword,
+  }: User) => {
+    if (password !== confirmPassword)
+      return setError({
+        show: true,
+        msg: 'please make sure your passwords match',
+      });
+
+    //clear error message and show loader
+    setError({ show: false, msg: '' });
+    setIsLoading(true);
+
+    const user = {
+      name,
+      email,
+      password,
+      authProvider: 'myApp',
+    };
+
+    try {
+      await authenticate('signup', user);
+      history.push('/signin');
+    } catch (err) {
+      setIsLoading(false);
+      setError({ show: true, msg: err.message });
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: { name: '', email: '', password: '', confirmPassword: '' },
+    onSubmit: submitForm,
+  });
+
+  const userFeedback = (): JSX.Element | undefined => {
+    if (error.show) return <span style={{ color: 'red' }}>{error.msg}</span>;
+    if (isLoading) return <LinearProgress style={{ width: '100%' }} />;
+  };
+
+  if (isUserLoggedIn) return <Redirect to='/' />;
+
+  return (
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component='h1' variant='h5'>
+          Sign up
+        </Typography>
+        <form className={classes.form} onSubmit={formik.handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                onChange={formik.handleChange}
+                value={formik.values.name}
+                autoComplete='name'
+                name='name'
+                variant='outlined'
+                required
+                fullWidth
+                id='name'
+                label='Full Name'
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                variant='outlined'
+                required
+                fullWidth
+                id='email'
+                label='Email Address'
+                name='email'
+                autoComplete='email'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                variant='outlined'
+                required
+                fullWidth
+                name='password'
+                label='Password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                onChange={formik.handleChange}
+                value={formik.values.confirmPassword}
+                variant='outlined'
+                required
+                fullWidth
+                name='confirmPassword'
+                label='Confirm Password'
+                type='password'
+                id='confirmPassword'
+                autoComplete='current-password'
+              />
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <div className={classes.userFeedbackContainer}>
+              {userFeedback()}
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              color='primary'
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            Already have an account?
+            <Link to='/signIn'> Sign in</Link>
+          </Grid>
+          <Grid item xs={12}>
+            <div className={classes.socialaAuth}>
+              <hr className={classes.seperator} />
+              <div className={classes.or}>Sign up with</div>
+              <FacebookAuth />
+            </div>
+          </Grid>
+        </form>
+      </div>
+    </Container>
+  );
+};
+export default SignUp;

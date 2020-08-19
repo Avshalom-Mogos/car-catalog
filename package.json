@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "Run project",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {},
   "scripts": {
     "client-install": "cd client && npm install",
     "server-install": "cd server && npm install",

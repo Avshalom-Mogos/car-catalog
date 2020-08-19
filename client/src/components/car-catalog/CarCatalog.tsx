@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CarCatalogItem from './car-catalog-item/CarCatalogItem';
 import FilterBar from '../filter-bar/FilterBar';
 import PaginationBar from '../paginataion-bar/PaginationBar';
 import Grid from '@material-ui/core/Grid';
 import { getCarsList } from '../../api/cars';
 import { Car } from '../../models/car';
+import { Redirect } from 'react-router-dom';
+import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
 import Spinner from '../spinner/Spinner';
 
 const CarCatalog = () => {
@@ -12,6 +14,7 @@ const CarCatalog = () => {
   const [listToDisplay, setListToDisplay] = useState<Car[]>([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -39,6 +42,8 @@ const CarCatalog = () => {
     const partialList: Car[] = listToDisplay.slice(startIndex, endIndex);
     return partialList;
   };
+
+  if (!isUserLoggedIn) return <Redirect to='/signin' />;
 
   return (
     <>
