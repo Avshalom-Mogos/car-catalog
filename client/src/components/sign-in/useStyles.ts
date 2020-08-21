@@ -35,8 +35,8 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     or: {
       margin: '0 auto',
-      transform: 'translateY(-70%)',
-      backgroundColor: '#fff',
+      transform: 'translateY(-60%)',
+      backgroundColor: '#fafafa',
       width: 85,
       textAlign: 'center',
     },

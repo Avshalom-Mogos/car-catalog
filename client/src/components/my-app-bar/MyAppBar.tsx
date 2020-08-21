@@ -42,20 +42,16 @@ const MyAppBar = () => {
     if (isUserLoggedIn) {
       return (
         <div>
-          <MenuItem onClick={handleClose}>
-            <Link className={classes.menuItem} to='/catalog'>
-              Catalog
-            </Link>
+          <MenuItem onClick={handleClose} component={Link} to='/catalog'>
+            Catalog
           </MenuItem>
           <MenuItem onClick={handleLogout}>logout</MenuItem>
         </div>
       );
     }
     return (
-      <MenuItem onClick={handleClose}>
-        <Link className={classes.menuItem} to='/signIn'>
-          Sign in
-        </Link>
+      <MenuItem onClick={handleClose} component={Link} to='/catalog'>
+        Sign in
       </MenuItem>
     );
   };

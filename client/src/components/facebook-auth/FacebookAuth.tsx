@@ -30,10 +30,6 @@ const FacebookAuth = () => {
   const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
 
   const responseFacebook = async (res: FbResponse) => {
-
-console.log('fbres',res);
-
-
     //when the user closes the popup window
     if (res.status === 'unknown') return;
 
@@ -45,7 +41,7 @@ console.log('fbres',res);
     };
 
     try {
-      const fetchedUser = await authenticate('facebook', user); //pass user only
+      const fetchedUser = await authenticate('facebook', user);
       const { accessToken } = res;
       const userWithToken = { ...fetchedUser, accessToken };
       localStorage.setItem('car_catalog_login', JSON.stringify(userWithToken));
