@@ -19,11 +19,16 @@ const CarCatalog = () => {
   useEffect(() => {
     const loadContent = async () => {
       try {
-        const fetchedCarslist = await getCarsList();
+        const user = JSON.parse(localStorage.car_catalog_login);
+        const { authProvider, accessToken } = user;
+        const fetchedCarslist: Car[] = await getCarsList(
+          accessToken,
+          authProvider
+        );
         setCarsList(fetchedCarslist);
         setListToDisplay(fetchedCarslist);
       } catch (err) {
-        console.error('Error from cars catalog');
+        console.error(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -36,11 +41,11 @@ const CarCatalog = () => {
     !isLoading && <p>no results found. try different filters.</p>;
 
   const paginate = (listToDisplay: Car[]): Car[] => {
-    const carsPerPage: number = 6;
-    const endIndex: number = page * carsPerPage;
-    const startIndex: number = endIndex - carsPerPage;
-    const partialList: Car[] = listToDisplay.slice(startIndex, endIndex);
-    return partialList;
+    const carsPerPage = 6;
+    const endIndex = page * carsPerPage;
+    const startIndex = endIndex - carsPerPage;
+    const partialCarList = listToDisplay.slice(startIndex, endIndex);
+    return partialCarList;
   };
 
   if (!isUserLoggedIn) return <Redirect to='/signin' />;

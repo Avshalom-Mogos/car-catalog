@@ -11,7 +11,6 @@ export const filterItems = (
   carsList: Car[],
   maxPrice: number
 ) => {
-  //filter
   const filteredItems: Car[] = [];
 
   for (let i = 0; i < carsList.length; i++) {

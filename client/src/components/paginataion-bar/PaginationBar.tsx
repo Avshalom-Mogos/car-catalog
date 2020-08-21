@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Pagination from '@material-ui/lab/Pagination';
 import { Car } from '../../models/car';
 import { useStyles } from './useStyles';
@@ -12,6 +12,11 @@ type props = {
 const PaginationBar = ({ page, setPage, listToDisplay }: props) => {
   const classes = useStyles();
 
+  useEffect(() => {
+    //reset the page to 1 when listToDisplay changes
+    setPage(1);
+  }, [listToDisplay, setPage]);
+
   const setPageOnChange = (
     event: React.ChangeEvent<unknown>,
     value: number
@@ -20,11 +25,11 @@ const PaginationBar = ({ page, setPage, listToDisplay }: props) => {
   };
 
   const calcNumOfPages: Function = (): number => {
-    const carsPerPage: number = 6;
+    const carsPerPage = 6;
     return Math.ceil(listToDisplay.length / carsPerPage);
   };
 
-  const minPages: number = 2;
+  const minPages = 2;
   if (calcNumOfPages() < minPages) return <></>;
 
   return (

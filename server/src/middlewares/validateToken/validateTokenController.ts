@@ -1,19 +1,35 @@
-import keys from '../../private/keys.json';
-import { validateFacebookToken } from './validateFacebookToken';
-import { validateMyAppToken } from './validateMyAppToken';
+import validateFacebookToken from './validateFacebookToken';
+import validateMyAppToken from './validateMyAppToken';
 import { NextFunction, Request, Response } from 'express';
 
-export const validateTokenController = (
+const validateTokenController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { authProvider, token } = req.params;
+  //lower cased because node lower case req headers
+  const authProvider = req.headers['authProvider'.toLocaleLowerCase()];
+  const authHeader = req.headers['Authorization'.toLocaleLowerCase()];
+  const accessToken = authHeader && (authHeader as string).split(' ')[1];
+  if (!accessToken) return res.status(401).send('Access Denied');
 
-  if (authProvider === 'myApp') {
-    validateMyAppToken(req, res, next);
-  }
-  if (authProvider === 'facebook') {
-    validateFacebookToken(token, keys, next);
+  const validateProviderFunctions: {
+    myApp: Function;
+    facebook: Function;
+    [key: string]: any;
+  } = {
+    myApp: validateMyAppToken,
+    facebook: validateFacebookToken,
+  };
+
+  try {
+    const validationFn = validateProviderFunctions[authProvider as string];
+    const isValid = await validationFn(accessToken);
+    if (isValid) next();
+    else res.status(400).send('Invalid ');
+  } catch (err) {
+    res.status(400).send('Invalid Token');
   }
 };
+
+export default validateTokenController;

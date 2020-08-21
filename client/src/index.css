@@ -11,8 +11,15 @@ code {
     monospace;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+#app > div {
+  min-height: calc(100vh - 64px);
 }

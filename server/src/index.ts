@@ -1,18 +1,19 @@
 import express, { Application, Request, Response } from 'express';
-import { carsRouter } from './routes/cars';
-import { authRouter } from './routes/auth';
+import carsRouter from './routes/cars';
+import authRouter from './routes/auth';
 import mongoose from 'mongoose';
 import path from 'path';
-import { validateTokenController } from './middlewares/validateToken/validateTokenController';
+import { config } from 'dotenv';
 
 const app: Application = express();
 const port: string | number = process.env.PORT || 5000;
 
 app.use(express.json());
+config();
 
 //database
 mongoose
-  .connect('mongodb://localhost:27017/carCatalogDB', {
+  .connect(process.env.DB_URI!, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

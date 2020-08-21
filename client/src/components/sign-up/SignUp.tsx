@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import FacebookAuth from '../facebook-auth/FacebookAuth';
 import { useStyles } from './useStyles';
-import { authenticate } from '../../api/auth';
+import authenticate from '../../api/auth';
 import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
@@ -98,6 +98,7 @@ const SignUp = () => {
                 id='name'
                 label='Full Name'
                 autoFocus
+                inputProps={{ minLength: 2 }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -107,6 +108,7 @@ const SignUp = () => {
                 variant='outlined'
                 required
                 fullWidth
+                type='email'
                 id='email'
                 label='Email Address'
                 name='email'
@@ -125,6 +127,7 @@ const SignUp = () => {
                 type='password'
                 id='password'
                 autoComplete='current-password'
+                inputProps={{ minLength: 6 }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -139,6 +142,7 @@ const SignUp = () => {
                 type='password'
                 id='confirmPassword'
                 autoComplete='current-password'
+                inputProps={{ minLength: 6 }}
               />
             </Grid>
           </Grid>
@@ -160,7 +164,7 @@ const SignUp = () => {
           </Grid>
           <Grid item xs={12}>
             Already have an account?
-            <Link to='/signIn'> Sign in</Link>
+            <Link to='/signin'> Sign in</Link>
           </Grid>
           <Grid item xs={12}>
             <div className={classes.socialaAuth}>

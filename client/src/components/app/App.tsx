@@ -9,17 +9,17 @@ import SignIn from '../sign-in/SignIn';
 
 const App = () => {
   return (
-    <div data-testid='app'>
+    <div data-testid='app' id='app'>
       <BrowserRouter>
         <MyAppBar />
-        <Container maxWidth='md'>
-          <Switch>
-            <Route exact path='/' component={Home} />
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Container maxWidth='md'>
             <Route exact path='/signup' component={SignUp} />
             <Route exact path='/signin' component={SignIn} />
             <Route exact path='/catalog' component={CarCatalog} />
-          </Switch>
-        </Container>
+          </Container>
+        </Switch>
       </BrowserRouter>
     </div>
   );

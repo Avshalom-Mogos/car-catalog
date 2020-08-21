@@ -1,10 +1,15 @@
-import { Car } from '../models/car';
+import axios from 'axios';
 
-export const getCarsList = (): Promise<Car[]> => {
-  return fetch('/cars')
-    .then(res => {
-      if (!res.ok) throw new Error(res.statusText);
-      return res.json();
+export const getCarsList = (accessToken: string, authProvider: string) => {
+  return axios
+    .get('/cars', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        authProvider,
+      },
     })
-    .then((carsList: Car[]) => carsList);
+    .then(res => res.data)
+    .catch(err => {
+      throw new Error(err.response.data);
+    });
 };

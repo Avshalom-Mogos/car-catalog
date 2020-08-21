@@ -10,13 +10,14 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import FacebookAuth from '../facebook-auth/FacebookAuth';
 import { useStyles } from './useStyles';
-import { authenticate } from '../../api/auth';
+import authenticate from '../../api/auth';
 import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const SignIn = () => {
   const classes = useStyles();
+  const history = useHistory();
   const [error, setError] = useState({ show: false, msg: '' });
   const [isLoading, setIsLoading] = useState(false);
   const { isUserLoggedIn, setIsUserLoggedIn } = useContext(
@@ -32,6 +33,7 @@ const SignIn = () => {
       const fetchedUser = await authenticate('signin', user);
       localStorage.setItem('car_catalog_login', JSON.stringify(fetchedUser));
       setIsUserLoggedIn(true);
+      history.push('/catalog');
     } catch (err) {
       setError({ show: true, msg: err.message });
     } finally {
@@ -70,6 +72,7 @@ const SignIn = () => {
                 variant='outlined'
                 required
                 fullWidth
+                type='email'
                 id='email'
                 label='Email Address'
                 name='email'
@@ -88,6 +91,7 @@ const SignIn = () => {
                 type='password'
                 id='password'
                 autoComplete='current-password'
+                inputProps={{ minLength: 6 }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -107,7 +111,7 @@ const SignIn = () => {
               </Button>
             </Grid>
             <Grid item xs={12}>
-              Already have an account?
+              Don't have an account?
               <Link to='/signup'> Sign up</Link>
             </Grid>
             <Grid item xs={12}>

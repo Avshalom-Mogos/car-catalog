@@ -3,7 +3,7 @@ import User from '../schemas/User';
 import jwt from 'jsonwebtoken';
 import express, { Request, Response, Router } from 'express';
 
-export const authRouter: Router = express.Router();
+const authRouter: Router = express.Router();
 
 authRouter.post('/signup', (req: Request, res: Response) => {
   const { name, email, password, authProvider } = req.body;
@@ -37,27 +37,31 @@ authRouter.post('/signup', (req: Request, res: Response) => {
 
 authRouter.post('/signin', (req, res) => {
   const { email, password } = req.body;
-  //check if the user exist in the db
+  //check if the user exists in the db
   User.findOne({ email }, (err, user) => {
     if (err) return res.status(400).send(err);
     if (user) {
-      const { name, id, email } = user;
+      const { name, id, email, authProvider } = user;
       //check if password is correct
       bcrypt
         .compare(password, user.password as string)
         .then(result => {
           if (result) {
             //create and assign token
-            const TOKEN_SECRET = 'anythingiwant'; //todo - make this an env var later
-            const token = jwt.sign({ _id: id }, TOKEN_SECRET);
-            res.header('auth-token', token).send({ name, id, email, token });
+            const accessToken = jwt.sign(
+              { _id: id },
+              process.env.ACCESS_TOKEN_SECRET as string
+            );
+            res
+              .status(200)
+              .send({ name, id, email, authProvider, accessToken });
           } else {
             return res.status(403).send('incorrect password or email');
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => res.status(500).send('something went wrong'));
     } else {
-      return res.status(400).send('User not found');
+      return res.status(400).send('incorrect password or email');
     }
   });
 });
@@ -76,3 +80,5 @@ authRouter.post('/facebook', (req: Request, res: Response) => {
     }
   });
 });
+
+export default authRouter;

@@ -1,8 +1,9 @@
 import express, { Request, Response, Router } from 'express';
 import cars from '../data/cars.json';
-export const  carsRouter: Router = express.Router();
+import validateTokenController from '../middlewares/validateToken/validateTokenController';
 
-carsRouter.get('/', (req: Request, res: Response) => {
+const carsRouter: Router = express.Router();
+carsRouter.get('/', validateTokenController, (req: Request, res: Response) => {
   res.status(200).send(cars);
 });
-
+export default carsRouter;

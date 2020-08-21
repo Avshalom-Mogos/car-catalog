@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
+import authenticate from '../../api/auth';
+import { useHistory } from 'react-router-dom';
 
-type FbResonse = {
+type FbResponse = {
+  status?: string;
   accessToken: string;
   data_access_expiration_time: number;
   email: string;
@@ -23,45 +26,40 @@ type FbResonse = {
 };
 
 const FacebookAuth = () => {
+  const history = useHistory();
   const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
-  const responseFacebook = (res: FbResonse) => {
-    const { name, email, userID: userProviderId, accessToken } = res;
+
+  const responseFacebook = async (res: FbResponse) => {
+    //when the user closes the popup window
+    if (res.status === 'unknown') return;
+
     const user = {
-      name,
-      email,
-      userProviderId,
+      name: res.name,
+      email: res.email,
+      userProviderId: res.userID,
       authProvider: 'facebook',
     };
 
-    fetch('/auth/facebook', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    })
-      .then(res => res.json())
-      .then(user => {
-        localStorage.setItem(
-          'car_catalog_login',
-          JSON.stringify({ ...user, accessToken })
-        );
-        setIsUserLoggedIn(true);
-      })
-      .catch(err => console.error(err));
+    try {
+      const fetchedUser = await authenticate('facebook', user);
+      const { accessToken } = res;
+      const userWithToken = { ...fetchedUser, accessToken };
+      localStorage.setItem('car_catalog_login', JSON.stringify(userWithToken));
+      setIsUserLoggedIn(true);
+      history.push('/catalog');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <div>
       <FacebookLogin
         appId='306159394138292'
-        autoLoad={true}
         fields='name,email,picture'
         callback={responseFacebook}
       />
     </div>
   );
 };
-
 export default FacebookAuth;
