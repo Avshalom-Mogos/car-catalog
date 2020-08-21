@@ -3,11 +3,7 @@ import useStyles from './useStyles';
 
 const PageNotFound = () => {
   const classes = useStyles();
-  return <div className={classes.root}>
-    <div>
-      
-    </div>
-  </div>;
+  return <div className={classes.root}></div>;
 };
 
 export default PageNotFound;
