@@ -30,6 +30,10 @@ const FacebookAuth = () => {
   const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
 
   const responseFacebook = async (res: FbResponse) => {
+
+console.log('fbres',res);
+
+
     //when the user closes the popup window
     if (res.status === 'unknown') return;
 

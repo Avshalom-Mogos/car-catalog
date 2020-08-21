@@ -1,8 +1,10 @@
-import validateFacebookToken from './validateFacebookToken';
-import validateMyAppToken from './validateMyAppToken';
+import {
+  validateFacebookToken,
+  validateMyAppToken,
+} from './validateTokenFunctions';
 import { NextFunction, Request, Response } from 'express';
 
-const validateTokenController = async (
+const validateToken = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -32,4 +34,4 @@ const validateTokenController = async (
   }
 };
 
-export default validateTokenController;
+export default validateToken;
