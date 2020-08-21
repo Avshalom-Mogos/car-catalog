@@ -41,7 +41,7 @@ const FacebookAuth = () => {
     };
 
     try {
-      const fetchedUser = await authenticate('facebook', user);
+      const fetchedUser = await authenticate('facebook', user); //pass user only
       const { accessToken } = res;
       const userWithToken = { ...fetchedUser, accessToken };
       localStorage.setItem('car_catalog_login', JSON.stringify(userWithToken));

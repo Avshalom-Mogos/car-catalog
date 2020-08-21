@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { getCarsList } from '../../api/cars';
 import { Car } from '../../models/car';
 import { Redirect } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
 import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
 import Spinner from '../spinner/Spinner';
 
@@ -51,7 +52,7 @@ const CarCatalog = () => {
   if (!isUserLoggedIn) return <Redirect to='/signin' />;
 
   return (
-    <>
+    <Container maxWidth='md'>
       <FilterBar
         listToDisplay={listToDisplay}
         setListToDisplay={setListToDisplay}
@@ -69,7 +70,7 @@ const CarCatalog = () => {
         setPage={setPage}
         listToDisplay={listToDisplay}
       />
-    </>
+    </Container>
   );
 };
 export default CarCatalog;

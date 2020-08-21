@@ -15,6 +15,7 @@ import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
 import { Link, Redirect } from 'react-router-dom';
+//reduce imports
 
 const SignUp = () => {
   const classes = useStyles();
@@ -23,7 +24,7 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
 
-  type User = {
+  type formValues = {
     name: string;
     email: string;
     password: string;
@@ -35,7 +36,7 @@ const SignUp = () => {
     email,
     password,
     confirmPassword,
-  }: User) => {
+  }: formValues) => {
     if (password !== confirmPassword)
       return setError({
         show: true,
