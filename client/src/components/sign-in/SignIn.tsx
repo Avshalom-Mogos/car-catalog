@@ -1,19 +1,13 @@
 import React, { useState, useContext } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import { useFormik } from 'formik';
+import { Avatar, Button, CssBaseline, LinearProgress } from '@material-ui/core';
+import { TextField, Grid, Typography, Container } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import FacebookAuth from '../facebook-auth/FacebookAuth';
-import { useStyles } from './useStyles';
 import authenticate from '../../api/auth';
-import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
 import { Link, Redirect, useHistory } from 'react-router-dom';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
+import { useFormik } from 'formik';
+import { useStyles } from './useStyles';
 
 const SignIn = () => {
   const classes = useStyles();
