@@ -14,8 +14,6 @@ const GoogleAuth = () => {
     // when the user closes the popup window
     if (res.error === 'popup_closed_by_user') return;
 
-    console.log('res', res);
-
     const user = {
       name: res.profileObj.name,
       email: res.profileObj.email,
