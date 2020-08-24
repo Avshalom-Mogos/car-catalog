@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
 import authenticate from '../../api/auth';
 import { useHistory } from 'react-router-dom';
+import useStyles from './useStyles';
 
 type FbResponse = {
   status?: string;
@@ -27,6 +28,7 @@ type FbResponse = {
 
 const FacebookAuth = () => {
   const history = useHistory();
+  const classes = useStyles();
   const { setIsUserLoggedIn } = useContext(IsUserLoggedInContext);
 
   const responseFacebook = async (res: FbResponse) => {
@@ -41,7 +43,7 @@ const FacebookAuth = () => {
     };
 
     try {
-      const fetchedUser = await authenticate('facebook', user);
+      const fetchedUser = await authenticate('soical', user);
       const { accessToken } = res;
       const userWithToken = { ...fetchedUser, accessToken };
       localStorage.setItem('car_catalog_login', JSON.stringify(userWithToken));
@@ -58,6 +60,11 @@ const FacebookAuth = () => {
         appId='306159394138292'
         fields='name,email,picture'
         callback={responseFacebook}
+        render={renderProps => (
+          <button className={classes.fbBtn} onClick={renderProps.onClick}>
+            <div className={classes.fbBtnIcon}></div>
+          </button>
+        )}
       />
     </div>
   );

@@ -3,6 +3,7 @@ import { Avatar, Button, CssBaseline, LinearProgress } from '@material-ui/core';
 import { TextField, Grid, Typography, Container } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FacebookAuth from '../facebook-auth/FacebookAuth';
+import GoogleAuth from '../google-auth/GoogleAuth';
 import authenticate from '../../api/auth';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
@@ -112,11 +113,12 @@ const SignIn = () => {
               <div className={classes.socialaAuth}>
                 <hr className={classes.seperator} />
                 <div className={classes.or}>Sign in with</div>
-                <FacebookAuth />
               </div>
             </Grid>
           </Grid>
         </form>
+        <FacebookAuth />
+        <GoogleAuth />
       </div>
     </Container>
   );

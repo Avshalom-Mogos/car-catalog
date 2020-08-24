@@ -19,3 +19,13 @@ export const validateFacebookToken = async (accessToken: string) => {
     throw new Error(err.response.data);
   }
 };
+
+export const validateGoogleToken = async (accessToken: string) => {
+  const url = `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`;
+  try {
+    const res = await axios(url);
+    return res.data.expires_in;
+  } catch (err) {
+    throw new Error(err.response.data);
+  }
+};

@@ -163,10 +163,10 @@ const SignUp = () => {
             <div className={classes.socialaAuth}>
               <hr className={classes.seperator} />
               <div className={classes.or}>Sign up with</div>
-              <FacebookAuth />
             </div>
           </Grid>
         </form>
+        <FacebookAuth />
       </div>
     </Container>
   );

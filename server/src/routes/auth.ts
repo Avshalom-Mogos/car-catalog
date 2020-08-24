@@ -66,7 +66,7 @@ authRouter.post('/signin', (req, res) => {
   });
 });
 
-authRouter.post('/facebook', (req: Request, res: Response) => {
+authRouter.post('/soical', (req: Request, res: Response) => {
   const user = req.body;
   User.findOne({ userProviderId: user.userProviderId }).then(userFound => {
     if (userFound) {
