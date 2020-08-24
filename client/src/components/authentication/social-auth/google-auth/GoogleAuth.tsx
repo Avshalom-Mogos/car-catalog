@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
-import authenticate from '../../api/auth';
+import { IsUserLoggedInContext } from '../../../../contexts/IsUserLoggedIn';
+import authenticate from '../../../../api/auth';
 import { useHistory } from 'react-router-dom';
 import useStyles from './useStyles';
 import GoogleLogin from 'react-google-login';

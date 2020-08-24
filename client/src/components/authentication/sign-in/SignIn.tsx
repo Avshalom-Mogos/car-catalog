@@ -2,13 +2,12 @@ import React, { useState, useContext } from 'react';
 import { Avatar, Button, CssBaseline, LinearProgress } from '@material-ui/core';
 import { TextField, Grid, Typography, Container } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import FacebookAuth from '../facebook-auth/FacebookAuth';
-import GoogleAuth from '../google-auth/GoogleAuth';
-import authenticate from '../../api/auth';
+import authenticate from '../../../api/auth';
 import { Link, Redirect, useHistory } from 'react-router-dom';
-import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
+import { IsUserLoggedInContext } from '../../../contexts/IsUserLoggedIn';
 import { useFormik } from 'formik';
 import { useStyles } from './useStyles';
+import SocialAuth from '../social-auth/SocialAuth';
 
 const SignIn = () => {
   const classes = useStyles();
@@ -117,8 +116,7 @@ const SignIn = () => {
             </Grid>
           </Grid>
         </form>
-        <FacebookAuth />
-        <GoogleAuth />
+        <SocialAuth />
       </div>
     </Container>
   );

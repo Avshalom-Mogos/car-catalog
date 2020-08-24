@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import CarCatalogItem from './car-catalog-item/CarCatalogItem';
-import FilterBar from '../filter-bar/FilterBar';
+import FilterForm from '../filter-bar/FilterForm';
 import PaginationBar from '../paginataion-bar/PaginationBar';
 import Grid from '@material-ui/core/Grid';
 import { getCarsList } from '../../api/cars';
@@ -53,7 +53,7 @@ const CarCatalog = () => {
 
   return (
     <Container maxWidth='md'>
-      <FilterBar
+      <FilterForm
         listToDisplay={listToDisplay}
         setListToDisplay={setListToDisplay}
         carsList={carsList}

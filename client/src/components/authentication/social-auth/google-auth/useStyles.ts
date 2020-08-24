@@ -1,9 +1,9 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import facebookIcon from '../../assets/icons/facebook.png';
+import googleIcon from '../../../../assets/icons/google.png';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    fbBtn: {
+    googleBtn: {
       border: 'none',
       backgroundColor: '#fafafa',
       width: 48,
@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme: Theme) =>
         cursor: 'pointer',
       },
     },
-    fbBtnIcon: {
-      backgroundImage: `url(${facebookIcon})`,
+    googleBtnIcon: {
+      backgroundImage: `url(${googleIcon})`,
       backgroundSize: '100% 100%',
       width: '100%',
       height: '100%',

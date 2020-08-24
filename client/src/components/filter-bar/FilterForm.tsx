@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
-import FilterField from '../filter-field/FilterField';
+import FilterField from './filter-field/FilterField';
 import { Car } from '../../models/car';
 import { useStyles } from './useStyles';
 import { filterItems } from './filter';
@@ -13,7 +13,7 @@ type props = {
   carsList: Car[];
 };
 
-const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
+const FilterForm = ({ listToDisplay, setListToDisplay, carsList }: props) => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
@@ -46,6 +46,21 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
       if (brandInSelected && modelNotInResult) result.push(c.model);
     });
     return result;
+  };
+
+  const formSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    filterItems(
+      listToDisplay,
+      setListToDisplay,
+      selectedBrands,
+      selectedColors,
+      selectedModels,
+      selectedModelDates,
+      priceRange,
+      carsList,
+      maxPrice
+    );
   };
 
   const filters: {
@@ -84,7 +99,7 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
   };
 
   return (
-    <div className={classes.root}>
+    <form onSubmit={formSubmit} className={classes.root}>
       {filters.names.map((filterName: string, i: number) => (
         <FilterField
           key={i}
@@ -106,31 +121,16 @@ const FilterBar = ({ listToDisplay, setListToDisplay, carsList }: props) => {
           getAriaValueText={val => `$${val}`}
           valueLabelFormat={val => `$${val}`}
         />
-        <Typography id='range-slider' gutterBottom>
-          Price range
-        </Typography>
       </div>
       <Button
+        className={classes.filterBtn}
         variant='contained'
         color='secondary'
-        className={classes.button}
-        onClick={() =>
-          filterItems(
-            listToDisplay,
-            setListToDisplay,
-            selectedBrands,
-            selectedColors,
-            selectedModels,
-            selectedModelDates,
-            priceRange,
-            carsList,
-            maxPrice
-          )
-        }
+        type='submit'
       >
-        SUBMIT
+        FILTER
       </Button>
-    </div>
+    </form>
   );
 };
-export default FilterBar;
+export default FilterForm;

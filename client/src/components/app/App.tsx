@@ -2,8 +2,8 @@ import React from 'react';
 import MyAppBar from '../my-app-bar/MyAppBar';
 import CarCatalog from '../car-catalog/CarCatalog';
 import Home from '../home/Home';
-import SignUp from '../sign-up/SignUp';
-import SignIn from '../sign-in/SignIn';
+import SignUp from '../authentication/sign-up/SignUp';
+import SignIn from '../authentication/sign-in/SignIn';
 import PageNotFound from '../page-not-found/PageNotFound';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 

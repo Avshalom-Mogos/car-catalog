@@ -3,19 +3,27 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      margin: theme.spacing(3, 1),
       padding: theme.spacing(3),
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-evenly',
+      backgroundColor: '#fff',
+      border: '1px outset ',
+      height: 500,
     },
     slider: {
-      width: 250,
+      width: '100%',
+      maxWidth: 400,
       paddingTop: theme.spacing(6),
       paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
     },
-    button: {
-      position: 'relative',
+    filterBtn: {
       marginTop: theme.spacing(2),
-      display: 'inline-block',
-      left: '50%',
-      transform: 'translate(-50%)',
+      width: '100%',
+      maxWidth: 300,
+      margin: '0 auto',
     },
   })
 );

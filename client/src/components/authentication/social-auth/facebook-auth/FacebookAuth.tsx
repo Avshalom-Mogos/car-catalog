@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
-import authenticate from '../../api/auth';
+import { IsUserLoggedInContext } from '../../../../contexts/IsUserLoggedIn';
+import authenticate from '../../../../api/auth';
 import { useHistory } from 'react-router-dom';
 import useStyles from './useStyles';
 

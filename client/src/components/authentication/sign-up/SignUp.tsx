@@ -3,11 +3,11 @@ import { Avatar, Button, CssBaseline, LinearProgress } from '@material-ui/core';
 import { TextField, Grid, Typography, Container } from '@material-ui/core';
 import { useFormik } from 'formik';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import FacebookAuth from '../facebook-auth/FacebookAuth';
 import { useStyles } from './useStyles';
-import authenticate from '../../api/auth';
-import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
+import authenticate from '../../../api/auth';
+import { IsUserLoggedInContext } from '../../../contexts/IsUserLoggedIn';
 import { Link, Redirect, useHistory } from 'react-router-dom';
+import SocialAuth from '../social-auth/SocialAuth';
 
 const SignUp = () => {
   const classes = useStyles();
@@ -166,7 +166,7 @@ const SignUp = () => {
             </div>
           </Grid>
         </form>
-        <FacebookAuth />
+        <SocialAuth />
       </div>
     </Container>
   );
