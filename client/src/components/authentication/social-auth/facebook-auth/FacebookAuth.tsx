@@ -60,6 +60,9 @@ const FacebookAuth = () => {
         appId='306159394138292'
         fields='name,email,picture'
         callback={responseFacebook}
+        disableMobileRedirect={true}
+        isMobile={false}
+        autoLoad={false}
         render={renderProps => (
           <button className={classes.fbBtn} onClick={renderProps.onClick}>
             <div className={classes.fbBtnIcon}></div>
