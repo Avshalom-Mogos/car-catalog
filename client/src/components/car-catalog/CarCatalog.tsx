@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import CarCatalogItem from './car-catalog-item/CarCatalogItem';
 import FilterForm from '../filter-bar/FilterForm';
 import PaginationBar from '../paginataion-bar/PaginationBar';
 import Grid from '@material-ui/core/Grid';
 import { getCarsList } from '../../api/cars';
 import { Car } from '../../models/car';
-import { Redirect } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
-import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
 import Spinner from '../spinner/Spinner';
 import useStyles from './useStyles';
 
@@ -16,7 +14,7 @@ const CarCatalog = () => {
   const [listToDisplay, setListToDisplay] = useState<Car[]>([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
+  const [error, setError] = useState({ show: false, msg: '' });
   const classes = useStyles();
 
   useEffect(() => {
@@ -31,7 +29,10 @@ const CarCatalog = () => {
         setCarsList(fetchedCarslist);
         setListToDisplay(fetchedCarslist);
       } catch (err) {
-        console.error(err.message);
+        setError({
+          show: true,
+          msg: 'something went wrong',
+        });
       } finally {
         setIsLoading(false);
       }
@@ -39,6 +40,7 @@ const CarCatalog = () => {
     loadContent();
   }, []);
 
+  const errorMsg = error.show && <p>{error.msg}</p>;
   const loaderIfNeeded: boolean | JSX.Element = isLoading && <Spinner />;
   const numOfResults = !isLoading && (
     <p className={classes.numOfResults}>{listToDisplay.length} Matches</p>
@@ -54,8 +56,6 @@ const CarCatalog = () => {
     return partialCarList;
   };
 
-  if (!isUserLoggedIn) return <Redirect to='/signin' />;
-
   return (
     <Container maxWidth='md'>
       <FilterForm
@@ -63,6 +63,7 @@ const CarCatalog = () => {
         setListToDisplay={setListToDisplay}
         carsList={carsList}
       />
+      {errorMsg}
       {numOfResults}
       {loaderIfNeeded}
       {noResults}

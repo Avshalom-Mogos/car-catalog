@@ -5,9 +5,9 @@ import { useFormik } from 'formik';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { useStyles } from './useStyles';
 import authenticate from '../../../api/auth';
-import { IsUserLoggedInContext } from '../../../contexts/IsUserLoggedIn';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 import SocialAuth from '../social-auth/SocialAuth';
+import { IsUserLoggedInContext } from '../../../contexts/IsUserLoggedIn';
 
 const SignUp = () => {
   const classes = useStyles();
@@ -65,7 +65,7 @@ const SignUp = () => {
     if (isLoading) return <LinearProgress style={{ width: '100%' }} />;
   };
 
-  if (isUserLoggedIn) return <Redirect to='/' />;
+  if (isUserLoggedIn) return <Redirect to='catalog' />;
 
   return (
     <Container component='main' maxWidth='xs'>

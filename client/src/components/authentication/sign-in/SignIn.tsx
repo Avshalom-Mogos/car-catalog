@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Avatar, Button, CssBaseline, LinearProgress } from '@material-ui/core';
 import { TextField, Grid, Typography, Container } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import authenticate from '../../../api/auth';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { IsUserLoggedInContext } from '../../../contexts/IsUserLoggedIn';
 import { useFormik } from 'formik';
 import { useStyles } from './useStyles';
@@ -18,6 +18,11 @@ const SignIn = () => {
     IsUserLoggedInContext
   );
 
+  useEffect(() => {
+    //redirect to catalog after login
+    if (isUserLoggedIn) history.push('/catalog');
+  }, [isUserLoggedIn, history]);
+
   const submitForm = async (user: { email: string; password: string }) => {
     //clear error message and show loader
     setError({ show: false, msg: '' });
@@ -27,7 +32,6 @@ const SignIn = () => {
       const fetchedUser = await authenticate('signin', user);
       localStorage.setItem('car_catalog_login', JSON.stringify(fetchedUser));
       setIsUserLoggedIn(true);
-      history.push('/catalog');
     } catch (err) {
       setError({ show: true, msg: err.message });
     } finally {
@@ -44,8 +48,6 @@ const SignIn = () => {
     if (error.show) return <span style={{ color: 'red' }}>{error.msg}</span>;
     if (isLoading) return <LinearProgress style={{ width: '100%' }} />;
   };
-
-  if (isUserLoggedIn) return <Redirect to='/' />;
 
   return (
     <Container component='main' maxWidth='xs'>
