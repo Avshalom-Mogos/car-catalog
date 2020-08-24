@@ -40,6 +40,7 @@ const GoogleAuth = () => {
         buttonText='Login'
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
+        autoLoad={false}
         cookiePolicy={'single_host_origin'}
         render={renderProps => (
           <button
