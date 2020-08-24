@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
 import FilterField from './filter-field/FilterField';
@@ -25,15 +24,15 @@ const FilterForm = ({ listToDisplay, setListToDisplay, carsList }: props) => {
   useEffect(() => {
     //get & set Max Price
     if (!carsList.length) return;
-    const allPricesArr: number[] = carsList.map(car => Number(car.price));
-    const max: number = Math.max(...allPricesArr);
+    const allPricesArr = carsList.map(car => Number(car.price));
+    const max = Math.max(...allPricesArr);
     setMaxPrice(max);
     setPriceRange([0, max]);
   }, [carsList]);
 
   const getUniqeValues: Function = (key: string): string[] => {
-    const allValues: string[] = carsList.map(c => c[key]);
-    const uniqeValues: string[] = Array.from(new Set(allValues));
+    const allValues = carsList.map(c => c[key]);
+    const uniqeValues = Array.from(new Set(allValues));
     return uniqeValues;
   };
 

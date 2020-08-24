@@ -4,7 +4,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Car } from '../../../models/car';
@@ -12,6 +11,9 @@ import { useStyles } from './useStyles';
 
 const CatalogItem = ({ brand, modelDate, model, price, image }: Car) => {
   const classes = useStyles();
+  const numberWithCommas = (price: string) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
   return (
     <Grid item xs={12} sm={12} md={6} lg={4} xl={4} className={classes.root}>
       <Card>
@@ -30,9 +32,9 @@ const CatalogItem = ({ brand, modelDate, model, price, image }: Car) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size='small' color='primary'>
-            ${price}
-          </Button>
+          <Typography className={classes.price} variant='body2' component='h4'>
+            ${numberWithCommas(price)}
+          </Typography>
         </CardActions>
       </Card>
     </Grid>

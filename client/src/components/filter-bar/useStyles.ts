@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       justifyContent: 'space-evenly',
       backgroundColor: '#fff',
-      border: '1px outset ',
+      borderBottom: '1px outset ',
       height: 500,
     },
     slider: {

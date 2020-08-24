@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
 import Spinner from '../spinner/Spinner';
+import useStyles from './useStyles';
 
 const CarCatalog = () => {
   const [carsList, setCarsList] = useState<Car[]>([]);
@@ -16,6 +17,7 @@ const CarCatalog = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
+  const classes = useStyles();
 
   useEffect(() => {
     const loadContent = async () => {
@@ -38,6 +40,9 @@ const CarCatalog = () => {
   }, []);
 
   const loaderIfNeeded: boolean | JSX.Element = isLoading && <Spinner />;
+  const numOfResults = listToDisplay.length && (
+    <p className={classes.numOfResults}>{listToDisplay.length} Matches</p>
+  );
   const noResults: boolean | JSX.Element = !listToDisplay.length &&
     !isLoading && <p>no results found. try different filters.</p>;
 
@@ -58,6 +63,7 @@ const CarCatalog = () => {
         setListToDisplay={setListToDisplay}
         carsList={carsList}
       />
+      {numOfResults}
       {loaderIfNeeded}
       {noResults}
       <Grid container spacing={3} justify='space-evenly'>

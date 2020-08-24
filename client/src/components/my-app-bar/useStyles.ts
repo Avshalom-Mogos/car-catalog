@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       height: 64,
-      backgroundColor:'#1976d2'
+      backgroundColor: '#1976d2',
     },
     container: {
       height: '100%',
@@ -33,6 +33,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: '6px',
       textDecoration: 'none',
       color: '#000',
+    },
+    greet: {
+      color: '#1976d2',
+      fontWeight:600
     },
   })
 );

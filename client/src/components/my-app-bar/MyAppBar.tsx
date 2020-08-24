@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import IconButton from '@material-ui/core/IconButton';
+import { IconButton, Divider } from '@material-ui/core';
 import { IsUserLoggedInContext } from '../../contexts/IsUserLoggedIn';
 import { Link, useHistory } from 'react-router-dom';
 import { useStyles } from './useStyles';
@@ -85,7 +85,10 @@ const MyAppBar = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>{greetUser}</MenuItem>
+            <MenuItem className={classes.greet} onClick={handleClose} disabled>
+              {greetUser}!
+            </MenuItem>
+            <Divider />
             {getMenuItems()}
           </Menu>
         </div>
