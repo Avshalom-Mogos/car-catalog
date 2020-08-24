@@ -14,6 +14,8 @@ const GoogleAuth = () => {
     // when the user closes the popup window
     if (res.error === 'popup_closed_by_user') return;
 
+    console.log('res', res);
+
     const user = {
       name: res.profileObj.name,
       email: res.profileObj.email,
@@ -37,7 +39,6 @@ const GoogleAuth = () => {
     <div>
       <GoogleLogin
         clientId='1059315451607-0t2ot4ddi9cfs4i4hm2l8rcdfseai4o7.apps.googleusercontent.com'
-        buttonText='Login'
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         autoLoad={false}
