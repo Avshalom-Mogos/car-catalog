@@ -17,3 +17,12 @@ const authenticate = (authType: string, user: User) => {
     });
 };
 export default authenticate;
+
+export const checkAuth = (id: string) => {
+  return axios
+    .get(`auth/check/${id}`)
+    .then(res => res.data)
+    .catch(err => {
+      throw new Error(err.response.data);
+    });
+};

@@ -45,7 +45,7 @@ const MyAppBar = () => {
           <MenuItem onClick={handleClose} component={Link} to='/catalog'>
             Catalog
           </MenuItem>
-          <MenuItem onClick={handleLogout}>logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Sign out</MenuItem>
         </div>
       );
     }

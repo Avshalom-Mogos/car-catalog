@@ -75,10 +75,21 @@ authRouter.post('/soical', (req: Request, res: Response) => {
     } else {
       //if not found create user in the db
       new User({ ...user }).save().then(newUser => {
-        res.status(200).send(newUser);
+        res.status(201).send(newUser);
       });
     }
   });
 });
 
+//check the user auth
+authRouter.get('/check/:id', (req: Request, res: Response) => {
+  const userID = req.params.id;
+
+  User.findById(userID)
+    .then(userFound => {
+      if (userFound) return res.status(200).send(true);
+      else return res.status(404).send(false);
+    })
+    .catch(err => res.status(500).send(false));
+});
 export default authRouter;
