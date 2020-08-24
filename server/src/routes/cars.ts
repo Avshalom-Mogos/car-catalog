@@ -1,9 +1,12 @@
 import express, { Request, Response, Router } from 'express';
-import cars from '../data/cars.json';
+import Car from '../schemas/Car';
 import validateToken from '../middlewares/validateToken/validateToken';
 
 const carsRouter: Router = express.Router();
 carsRouter.get('/', validateToken, (req: Request, res: Response) => {
-  res.status(200).send(cars);
+  Car.find({}, (err, cars) => {
+    if (err) return res.status(500).send('somthing went wrong');
+    res.status(200).send(cars);
+  });
 });
 export default carsRouter;

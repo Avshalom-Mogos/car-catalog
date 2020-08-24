@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, Request, Response, response } from 'express';
 import carsRouter from './routes/cars';
 import authRouter from './routes/auth';
 import mongoose from 'mongoose';

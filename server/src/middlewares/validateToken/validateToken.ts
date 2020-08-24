@@ -10,14 +10,14 @@ const validateToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  //using this until i'll implement refresh tokens
-  next();
-
   //lower cased because node lower case req headers
   const authProvider = req.headers['authProvider'.toLocaleLowerCase()];
   const authHeader = req.headers['Authorization'.toLocaleLowerCase()];
   const accessToken = authHeader && (authHeader as string).split(' ')[1];
   if (!accessToken) return res.status(401).send('Access Denied');
+
+  //using this until i'll implement refresh tokens
+  if (authProvider !== 'myApp') return next();
 
   const validateProviderFunctions: {
     myApp: Function;

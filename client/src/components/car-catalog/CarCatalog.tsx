@@ -40,7 +40,7 @@ const CarCatalog = () => {
   }, []);
 
   const loaderIfNeeded: boolean | JSX.Element = isLoading && <Spinner />;
-  const numOfResults = listToDisplay.length && (
+  const numOfResults = !isLoading && (
     <p className={classes.numOfResults}>{listToDisplay.length} Matches</p>
   );
   const noResults: boolean | JSX.Element = !listToDisplay.length &&
@@ -68,7 +68,7 @@ const CarCatalog = () => {
       {noResults}
       <Grid container spacing={3} justify='space-evenly'>
         {paginate(listToDisplay).map(car => (
-          <CarCatalogItem key={car.id} {...car} />
+          <CarCatalogItem key={car._id} {...car} />
         ))}
       </Grid>
       <PaginationBar

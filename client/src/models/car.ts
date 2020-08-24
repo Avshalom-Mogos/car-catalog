@@ -1,9 +1,9 @@
 export interface Car {
+  _id: string;
   bodyType: string;
   brand: string;
   color: string;
   fuelType: string;
-  id: number;
   image: string;
   model: string;
   modelDate: string;
