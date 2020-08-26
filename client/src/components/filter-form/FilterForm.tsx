@@ -112,14 +112,15 @@ const FilterForm = ({ listToDisplay, setListToDisplay, carsList }: props) => {
 
       <div className={classes.slider}>
         <Slider
+          classes={{ valueLabel: classes.valueLabel }}
           value={priceRange}
           onChange={(e, newValue) => setPriceRange(newValue as number[])}
           min={0}
           max={maxPrice}
           valueLabelDisplay='on'
           aria-labelledby='range-slider'
-          getAriaValueText={val => numberWithCommas(val.toString())}
-          valueLabelFormat={val => numberWithCommas(val.toString())}
+          getAriaValueText={val => `$${numberWithCommas(val.toString())}`}
+          valueLabelFormat={val => `$${numberWithCommas(val.toString())}`}
         />
       </div>
       <Button

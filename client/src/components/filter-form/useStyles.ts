@@ -24,5 +24,13 @@ export const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 300,
       margin: '0 auto',
     },
+    valueLabel: {
+      '& > span': {
+        background: 'transparent',
+      },
+      '& span span': {
+        color: '#3f51b5',
+      },
+    },
   })
 );
