@@ -8,7 +8,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-evenly',
-      backgroundColor: '#fff',
       borderBottom: '1px outset ',
       height: 500,
     },

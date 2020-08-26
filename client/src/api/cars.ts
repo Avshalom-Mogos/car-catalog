@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-export const getCarsList = (accessToken: string, authProvider: string) => {
+export const getCarsList = (token: string) => {
   return axios
     .get('/cars', {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-        authProvider,
+        Authorization: `Bearer ${token}`,
       },
     })
     .then(res => res.data)

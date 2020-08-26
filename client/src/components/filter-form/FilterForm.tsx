@@ -5,6 +5,7 @@ import FilterField from './filter-field/FilterField';
 import { Car } from '../../models/car';
 import { useStyles } from './useStyles';
 import { filterItems } from './filter';
+import { numberWithCommas } from '../../utils/utlis';
 
 type props = {
   listToDisplay: Car[];
@@ -117,8 +118,8 @@ const FilterForm = ({ listToDisplay, setListToDisplay, carsList }: props) => {
           max={maxPrice}
           valueLabelDisplay='on'
           aria-labelledby='range-slider'
-          getAriaValueText={val => `$${val}`}
-          valueLabelFormat={val => `$${val}`}
+          getAriaValueText={val => numberWithCommas(val.toString())}
+          valueLabelFormat={val => numberWithCommas(val.toString())}
         />
       </div>
       <Button

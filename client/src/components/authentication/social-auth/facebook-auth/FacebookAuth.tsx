@@ -44,9 +44,7 @@ const FacebookAuth = () => {
 
     try {
       const fetchedUser = await authenticate('soical', user);
-      const { accessToken } = res;
-      const userWithToken = { ...fetchedUser, accessToken };
-      localStorage.setItem('car_catalog_login', JSON.stringify(userWithToken));
+      localStorage.setItem('car_catalog_login', JSON.stringify(fetchedUser));
       setIsUserLoggedIn(true);
       history.push('/catalog');
     } catch (err) {

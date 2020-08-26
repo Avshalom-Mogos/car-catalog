@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { checkAuth } from '../api/auth';
+import decode from 'jwt-decode';
 interface Props {
   isUserLoggedIn: boolean;
   setIsUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,17 +15,22 @@ export const IsUserLoggedInProvider = ({
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
-    const cheackUserId = async () => {
+    const checkAuth = () => {
       try {
-        const userId = JSON.parse(localStorage.car_catalog_login).id;
-        const isUserExsit = await checkAuth(userId);
-        setIsUserLoggedIn(isUserExsit);
+        const { token } = JSON.parse(localStorage.car_catalog_login);
+        if (!token) return false;
+        const { exp: tokenExpirationTime } = decode(token);
+        const currentTimeInSeconds = new Date().getTime() / 1000;
+        const tokenExpired = tokenExpirationTime < currentTimeInSeconds;
+        if (tokenExpired) return false;
       } catch (err) {
-        setIsUserLoggedIn(false);
+        return false;
       }
+      return true;
     };
-    cheackUserId();
-  }, []);
+
+    setIsUserLoggedIn(checkAuth());
+  }, [isUserLoggedIn]);
 
   return (
     <IsUserLoggedInContext.Provider

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CarCatalogItem from './car-catalog-item/CarCatalogItem';
-import FilterForm from '../filter-bar/FilterForm';
+import FilterForm from '../filter-form/FilterForm';
 import PaginationBar from '../paginataion-bar/PaginationBar';
 import Grid from '@material-ui/core/Grid';
 import { getCarsList } from '../../api/cars';
@@ -20,12 +20,8 @@ const CarCatalog = () => {
   useEffect(() => {
     const loadContent = async () => {
       try {
-        const user = JSON.parse(localStorage.car_catalog_login);
-        const { authProvider, accessToken } = user;
-        const fetchedCarslist: Car[] = await getCarsList(
-          accessToken,
-          authProvider
-        );
+        const { token } = JSON.parse(localStorage.car_catalog_login);
+        const fetchedCarslist: Car[] = await getCarsList(token);
         setCarsList(fetchedCarslist);
         setListToDisplay(fetchedCarslist);
       } catch (err) {

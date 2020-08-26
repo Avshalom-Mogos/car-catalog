@@ -1,6 +1,6 @@
 import express, { Request, Response, Router } from 'express';
 import Car from '../schemas/Car';
-import validateToken from '../middlewares/validateToken/validateToken';
+import validateToken from '../middlewares/validateToken';
 
 const carsRouter: Router = express.Router();
 carsRouter.get('/', validateToken, (req: Request, res: Response) => {

@@ -41,20 +41,24 @@ authRouter.post('/signin', (req, res) => {
   User.findOne({ email }, (err, user) => {
     if (err) return res.status(400).send(err);
     if (user) {
-      const { name, id, email, authProvider } = user;
+      const { name, _id, email, authProvider } = user;
+
+      if (authProvider !== 'myApp')
+        return res
+          .status(403)
+          .send(`You can't use this login method with this email`);
       //check if password is correct
       bcrypt
         .compare(password, user.password as string)
         .then(result => {
           if (result) {
-            //create and assign token
-            const accessToken = jwt.sign(
-              { _id: id },
-              process.env.ACCESS_TOKEN_SECRET as string
-            );
-            res
-              .status(200)
-              .send({ name, id, email, authProvider, accessToken });
+            res.status(200).send({
+              _id,
+              name,
+              email,
+              authProvider,
+              token: createToken(_id),
+            });
           } else {
             return res.status(403).send('incorrect password or email');
           }
@@ -71,25 +75,24 @@ authRouter.post('/soical', (req: Request, res: Response) => {
   User.findOne({ userProviderId: user.userProviderId }).then(userFound => {
     if (userFound) {
       //return the user to client
-      res.status(200).send(userFound);
+      res.status(200).send({ ...userFound, token: createToken(userFound._id) });
     } else {
       //if not found create user in the db
-      new User({ ...user }).save().then(newUser => {
-        res.status(201).send(newUser);
+      new User(user).save().then(newUser => {
+        res.status(201).send({ ...newUser, token: createToken(newUser._id) });
       });
     }
   });
 });
 
-//check the user auth
-authRouter.get('/check/:id', (req: Request, res: Response) => {
-  const userID = req.params.id;
+//helpers
+function createToken(id: string) {
+  const token = jwt.sign(
+    { _id: id },
+    process.env.ACCESS_TOKEN_SECRET as string,
+    { expiresIn: '3d' }
+  );
+  return token;
+}
 
-  User.findById(userID)
-    .then(userFound => {
-      if (userFound) return res.status(200).send(true);
-      else return res.status(404).send(false);
-    })
-    .catch(err => res.status(500).send(false));
-});
 export default authRouter;
