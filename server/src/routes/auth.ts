@@ -72,14 +72,20 @@ authRouter.post('/signin', (req, res) => {
 
 authRouter.post('/soical', (req: Request, res: Response) => {
   const user = req.body;
-  User.findOne({ userProviderId: user.userProviderId }).then(userFound => {
+  User.findOne({ userProviderId: user.userProviderId }, (err, userFound) => {
+    if (err) return res.status(400).send(err);
+
     if (userFound) {
-      //return the user to client
-      res.status(200).send({ ...userFound, token: createToken(userFound._id) });
+      //  return the user to client with a token
+      res
+        .status(200)
+        .send({ ...userFound._doc, token: createToken(userFound._id) });
     } else {
-      //if not found create user in the db
+      //  if not found create user in the db and return it
       new User(user).save().then(newUser => {
-        res.status(201).send({ ...newUser, token: createToken(newUser._id) });
+        res
+          .status(201)
+          .send({ ...newUser._doc, token: createToken(newUser._id) });
       });
     }
   });

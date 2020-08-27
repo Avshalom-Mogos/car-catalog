@@ -18,8 +18,13 @@ const GoogleAuth = () => {
       authProvider: 'google',
     };
 
+    console.log(res);
+    
+
     try {
       const fetchedUser = await authenticate('soical', user);
+      console.log(fetchedUser);
+      
       localStorage.setItem('car_catalog_login', JSON.stringify(fetchedUser));
       setIsUserLoggedIn(true);
     } catch (err) {
