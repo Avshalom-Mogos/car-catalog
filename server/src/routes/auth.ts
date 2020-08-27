@@ -18,7 +18,7 @@ authRouter.post('/signup', (req: Request, res: Response) => {
     //hash password
     bcrypt.hash(password, 10, (err, hashedPassword) => {
       if (err) return res.status(500).send('something went wrong');
-      //  create user
+      //  create a user with the hashed password
       const user = new User({
         name,
         email,
