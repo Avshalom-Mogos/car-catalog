@@ -3,13 +3,13 @@ import Pagination from '@material-ui/lab/Pagination';
 import { Car } from '../../models/car';
 import { useStyles } from './useStyles';
 
-type props = {
+type Props = {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   listToDisplay: Car[];
 };
 
-const PaginationBar = ({ page, setPage, listToDisplay }: props) => {
+const PaginationBar = ({ page, setPage, listToDisplay }: Props) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const PaginationBar = ({ page, setPage, listToDisplay }: props) => {
     setPage(value);
   };
 
-  const calcNumOfPages: Function = (): number => {
+  const calcNumOfPages = () => {
     const carsPerPage = 6;
     return Math.ceil(listToDisplay.length / carsPerPage);
   };

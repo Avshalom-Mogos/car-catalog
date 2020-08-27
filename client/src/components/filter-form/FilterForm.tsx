@@ -7,13 +7,13 @@ import { useStyles } from './useStyles';
 import { filterItems } from './filter';
 import { numberWithCommas } from '../../utils/utlis';
 
-type props = {
+type Props = {
   listToDisplay: Car[];
   setListToDisplay: React.Dispatch<React.SetStateAction<Car[]>>;
   carsList: Car[];
 };
 
-const FilterForm = ({ listToDisplay, setListToDisplay, carsList }: props) => {
+const FilterForm = ({ listToDisplay, setListToDisplay, carsList }: Props) => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
@@ -31,13 +31,13 @@ const FilterForm = ({ listToDisplay, setListToDisplay, carsList }: props) => {
     setPriceRange([0, max]);
   }, [carsList]);
 
-  const getUniqeValues: Function = (key: string): string[] => {
+  const getUniqeValues = (key: string): string[] => {
     const allValues = carsList.map(c => c[key]);
     const uniqeValues = Array.from(new Set(allValues));
     return uniqeValues;
   };
 
-  const getSelectedBrandModles: Function = (): string[] => {
+  const getSelectedBrandModles = () => {
     if (!selectedBrands.length) return getUniqeValues('model');
     const result: string[] = [];
     listToDisplay.forEach((c: Car) => {

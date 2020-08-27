@@ -5,7 +5,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
-type props = {
+type Props = {
   options: string[];
   setStateFn: React.Dispatch<React.SetStateAction<string[]>>;
   label: string;
@@ -15,7 +15,7 @@ type props = {
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const FilterField = ({ options, setStateFn, label, placeholder }: props) => {
+const FilterField = ({ options, setStateFn, label, placeholder }: Props) => {
   return (
     <div>
       <Autocomplete

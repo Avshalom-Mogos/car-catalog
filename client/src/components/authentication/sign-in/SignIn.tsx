@@ -44,7 +44,7 @@ const SignIn = () => {
     onSubmit: submitForm,
   });
 
-  const userFeedback = (): JSX.Element | undefined => {
+  const userFeedback = () => {
     if (error.show) return <span style={{ color: 'red' }}>{error.msg}</span>;
     if (isLoading) return <LinearProgress style={{ width: '100%' }} />;
   };

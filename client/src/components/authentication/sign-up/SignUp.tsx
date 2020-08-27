@@ -16,7 +16,7 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isUserLoggedIn } = useContext(IsUserLoggedInContext);
 
-  type formValues = {
+  type FormValues = {
     name: string;
     email: string;
     password: string;
@@ -28,7 +28,7 @@ const SignUp = () => {
     email,
     password,
     confirmPassword,
-  }: formValues) => {
+  }: FormValues) => {
     if (password !== confirmPassword)
       return setError({
         show: true,
@@ -60,7 +60,7 @@ const SignUp = () => {
     onSubmit: submitForm,
   });
 
-  const userFeedback = (): JSX.Element | undefined => {
+  const userFeedback = () => {
     if (error.show) return <span style={{ color: 'red' }}>{error.msg}</span>;
     if (isLoading) return <LinearProgress style={{ width: '100%' }} />;
   };

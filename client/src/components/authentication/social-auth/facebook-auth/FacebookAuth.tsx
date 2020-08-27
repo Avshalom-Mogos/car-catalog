@@ -48,7 +48,7 @@ const FacebookAuth = () => {
       setIsUserLoggedIn(true);
       history.push('/catalog');
     } catch (err) {
-      console.error(err);
+      //the pop up handles the errors
     }
   };
 

@@ -23,7 +23,7 @@ const GoogleAuth = () => {
       localStorage.setItem('car_catalog_login', JSON.stringify(fetchedUser));
       setIsUserLoggedIn(true);
     } catch (err) {
-      console.error(err);
+      //the pop up handles the errors
     }
   };
 
