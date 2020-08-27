@@ -72,7 +72,7 @@ authRouter.post('/soical', (req: Request, res: Response) => {
         .status(200)
         .send({ ...userFound._doc, token: createToken(userFound._id) });
     } else {
-      //  if not found create user in the db and
+      //  if not found create user in the db and send it 
       new User(user).save((err, newUser) => {
         if (err) return res.status(400).send(err);
         res
